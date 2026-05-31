@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>瞬読・記憶法トレーニング</title>
+<title>記憶法トレーニング</title>
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2f6f64">
+<meta name="theme-color" content="#b9743a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="瞬読トレーニング">
+<meta name="apple-mobile-web-app-title" content="記憶法トレーニング">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,8 +29,8 @@
   --teal-d:#235249;
   --terra:#b9743a;
   --terra-d:#955a2a;
-  --accent:var(--teal);
-  --accent-d:var(--teal-d);
+  --accent:var(--terra);
+  --accent-d:var(--terra-d);
   --shadow:0 10px 30px rgba(60,50,30,.08);
   --radius:16px;
   --fs-mult:1;
@@ -41,8 +41,7 @@ body{
   margin:0;background:var(--paper);color:var(--ink);
   font-family:"Zen Kaku Gothic New",system-ui,sans-serif;
   line-height:1.8;font-size:16px;
-  background-image:radial-gradient(circle at 20% -10%,rgba(47,111,100,.06),transparent 45%),
-                   radial-gradient(circle at 90% 0%,rgba(185,116,58,.06),transparent 40%);
+  background-image:radial-gradient(circle at 90% 0%,rgba(185,116,58,.06),transparent 40%);
 }
 h1,h2,h3,.serif{font-family:"Zen Old Mincho",serif;}
 a{color:var(--accent-d);}
@@ -54,7 +53,7 @@ header.site{
 }
 .bar{max-width:980px;margin:0 auto;padding:.7rem 1.1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
 .brand{font-family:"Zen Old Mincho",serif;font-weight:900;font-size:1.25rem;letter-spacing:.04em;display:flex;align-items:center;gap:.5rem;}
-.brand .dot{width:.7rem;height:.7rem;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--terra));}
+.brand .dot{width:.7rem;height:.7rem;border-radius:50%;background:linear-gradient(135deg,var(--terra),var(--terra-d));}
 nav.tabs{margin-left:auto;display:flex;gap:.3rem;}
 nav.tabs .nav-tab{
   font-family:inherit;font-size:.95rem;border:none;background:transparent;color:var(--muted);
@@ -67,7 +66,6 @@ main{max-width:980px;margin:0 auto;padding:1.4rem 1.1rem 5rem;}
 .main-section{display:none;animation:fade .35s ease;}
 .main-section.show{display:block;}
 @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-.main-shun{--accent:var(--teal);--accent-d:var(--teal-d);}
 .main-mem{--accent:var(--terra);--accent-d:var(--terra-d);}
 
 /* ===== Hero ===== */
@@ -160,9 +158,6 @@ input[type=range]{width:100%;accent-color:var(--accent);}
   border:1px dashed var(--line);border-radius:12px;margin-top:1rem;padding:1rem;white-space:pre-line;
   font-size:calc(1.8rem*var(--fs-mult));position:relative;overflow:hidden;background:#fff;}
 .stage.big{min-height:260px;}
-.stage.vertical{writing-mode:vertical-rl;text-orientation:upright;}
-.field{position:relative;height:280px;border:1px dashed var(--line);border-radius:12px;background:#fff;margin-top:1rem;overflow:hidden;}
-.letter{position:absolute;transform:translate(-50%,-50%);font-size:calc(1.5rem*var(--fs-mult));}
 .timer{text-align:center;color:var(--muted);font-weight:700;margin-top:.5rem;font-variant-numeric:tabular-nums;}
 .grid-num{display:grid;gap:.4rem;justify-content:center;}
 .grid-num span{width:2.2rem;height:2.2rem;display:flex;align-items:center;justify-content:center;
@@ -183,13 +178,6 @@ table{width:100%;border-collapse:collapse;margin-top:.8rem;font-size:.85rem;}
 th,td{border-bottom:1px solid var(--line);padding:.45rem .4rem;text-align:center;}
 th{color:var(--accent-d);font-weight:700;}
 canvas{margin-top:1rem;max-height:300px;}
-
-/* silence overlay */
-#silence{position:fixed;inset:0;background:#0c0c0c;display:none;align-items:center;justify-content:center;z-index:999;color:#eee;}
-#silence .box{width:70%;max-width:560px;text-align:center;}
-#silence .prog{background:rgba(255,255,255,.15);}
-#silence .prog > i{background:linear-gradient(90deg,#8ec5ff,#fff);}
-#silence .cnt{margin-top:.7rem;font-size:.9rem;opacity:.75;}
 
 /* dominic grid */
 .dom-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-top:.8rem;}
@@ -218,14 +206,7 @@ canvas{margin-top:1rem;max-height:300px;}
 .kicker{font-size:.8rem;color:var(--muted);}
 .help{font-size:.85rem;color:var(--muted);background:color-mix(in srgb,var(--accent) 5%,transparent);
   border:1px solid var(--line);border-radius:10px;padding:.6rem .8rem;margin-top:.6rem;}
-/* ===== イメージ力 横書き/縦書き ===== */
-.img-stage-h{display:flex;flex-direction:column;align-items:center;gap:.7rem;min-height:10rem;justify-content:center;}
-.img-stage-h .img-line{font-family:"Zen Old Mincho",serif;font-size:calc(1.6rem * var(--fs-mult));letter-spacing:.12em;line-height:1.4;}
-.img-stage-v{display:flex;flex-direction:row-reverse;justify-content:center;gap:1rem;min-height:10rem;align-items:center;}
-.img-stage-v .img-line{font-family:"Zen Old Mincho",serif;font-size:calc(1.6rem * var(--fs-mult));writing-mode:vertical-rl;letter-spacing:.12em;line-height:1.4;}
-/* ===== 速読テスト ===== */
-.reading-text{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.2rem 1.4rem;
-  max-height:50vh;overflow-y:auto;font-size:1.05rem;line-height:2;white-space:pre-wrap;word-break:break-all;}
+
 /* ===== 記憶力レベルテスト ===== */
 .phase-indicator{display:flex;gap:.5rem;margin-bottom:1rem;}
 .phase-dot{width:1.8rem;height:1.8rem;border-radius:50%;background:var(--line);border:2px solid var(--line);
@@ -245,10 +226,9 @@ canvas{margin-top:1rem;max-height:300px;}
 
 <header class="site">
   <div class="bar">
-    <div class="brand"><span class="dot"></span>瞬読 ＆ 記憶法 トレーニング</div>
+    <div class="brand"><span class="dot"></span>記憶法トレーニング</div>
     <nav class="tabs" data-group="main">
       <button class="nav-tab active" data-target="m-home">ホーム</button>
-      <button class="nav-tab" data-target="m-shun">瞬読</button>
       <button class="nav-tab" data-target="m-mem">記憶法</button>
     </nav>
   </div>
@@ -259,16 +239,9 @@ canvas{margin-top:1rem;max-height:300px;}
 <!-- ============ HOME ============ -->
 <section class="main-section main-home show" id="m-home" data-pane-group="main">
   <div class="hero">
-    <div class="eyebrow">Reading × Memory</div>
-    <h1>「速く読む力」と「忘れない技術」を、<br>毎日少しずつ鍛える。</h1>
-    <p>瞬読は文字を“かたまり”で捉える練習、記憶法は情報を“イメージと場所”に変える練習です。原理を知り、手を動かして、自分の記録を伸ばしていきましょう。</p>
-  </div>
-
-  <div class="card">
-    <span class="tag">瞬読とは</span>
-    <h3>📖 黙読のクセをほどき、視野を広げる</h3>
-    <p class="lead">一文字ずつ声に出して読む「黙読」をしている限り、読書速度は話す速さに縛られます。瞬読は、文字を音に変換する前に、形・配置・流れとして一度に受け取る練習です。観察力とイメージ力という二つの土台を鍛えることで、目に入った情報をそのまま理解へつなげていきます。</p>
-    <button class="btn" data-jump="m-shun">瞬読をはじめる →</button>
+    <div class="eyebrow">Memory Training</div>
+    <h1>「忘れない技術」を、<br>毎日少しずつ鍛える。</h1>
+    <p>記憶法は才能ではなく技術です。情報をイメージと場所に変える方法を学び、数字・単語・カード配置を実際に覚える練習を重ねましょう。</p>
   </div>
 
   <div class="card">
@@ -280,266 +253,21 @@ canvas{margin-top:1rem;max-height:300px;}
 
   <div class="card">
     <h3>🌱 続け方のヒント</h3>
-    <div class="why"><b>毎日5〜10分でいい。</b> 長くやるより、短く毎日のほうが効きます。「正確に全部」より「印象でざっくり掴む」意識を大切に。慣れてきたら、表示時間を短く・文字数を多く・桁数を増やして、少しずつ負荷を上げていきましょう。記録は履歴に残るので、過去の自分と比べてみてください。</div>
+    <div class="why"><b>毎日5〜10分でいい。</b> 長くやるより、短く毎日のほうが効きます。「正確に全部」より「印象でざっくり掴む」意識を大切に。慣れてきたら、桁数を増やす・単語数を増やす・記憶時間を短くして、少しずつ負荷を上げていきましょう。記録は履歴に残るので、過去の自分と比べてみてください。</div>
   </div>
+
+  <div class="card">
+    <h3>📋 トレーニングメニュー</h3>
+    <div class="why">
+      ① <b>記憶術の解説</b>―場所法・ジャーニー法・ストーリー法の原理を理解する。<br>
+      ② <b>数字記憶・単語記憶</b>―毎日の基礎練習。桁数・語数を少しずつ増やす。<br>
+      ③ <b>カード配置記憶</b>―位置を覚える空間記憶のトレーニング。<br>
+      ④ <b>ドミニクシステム</b>―数字を人物・行動・物に変換する上級技術。<br>
+      ⑤ <b>実力テスト・レベルテスト</b>―週一回チャレンジして成長を確認。
+    </div>
+  </div>
+
   <div class="footer">完全ローカル保存（この端末内）。データは外部に送信されません。</div>
-</section>
-
-<!-- ============ 瞬読 ============ -->
-<section class="main-section main-shun" id="m-shun" data-pane-group="main">
-  <div class="hero">
-    <div class="eyebrow">瞬読 / Speed Reading</div>
-    <h1>瞬読トレーニング</h1>
-    <p>気になるカードを開くと、上で意義とやり方を確認しながらそのまま練習できます。</p>
-  </div>
-
-  <!-- メニュー -->
-  <div class="menu show" id="shun-menu">
-    <div class="menu-grid">
-      <div class="menu-card" data-open="s-about"><span class="ic">📚</span><h4>意義とやり方</h4><p>瞬読の考え方と続け方</p><span class="arrow">→</span></div>
-      <div class="menu-card" data-open="s-setup"><span class="ic">⚙️</span><h4>共通設定</h4><p>フォント・沈黙モード・テキスト</p><span class="arrow">→</span></div>
-      <div class="menu-card" data-open="s-flash"><span class="ic">🧠</span><h4>フラッシュ</h4><p>かたまりを高速表示</p><span class="arrow">→</span></div>
-      <div class="menu-card" data-open="s-word"><span class="ic">🪄</span><h4>単語</h4><p>瞬間認識・縦/横</p><span class="arrow">→</span></div>
-      <div class="menu-card" data-open="s-circle"><span class="ic">🌀</span><h4>円形</h4><p>視野を面で広げる</p><span class="arrow">→</span></div>
-      <div class="menu-card" data-open="s-rand"><span class="ic">🎲</span><h4>ランダム配置</h4><p>周辺視野・全体把握</p><span class="arrow">→</span></div>
-      <div class="menu-card" data-open="s-obs"><span class="ic">👁</span><h4>観察力</h4><p>マス目を丸ごと記憶</p><span class="arrow">→</span></div>
-      <div class="menu-card" data-open="s-img"><span class="ic">✨</span><h4>イメージ力</h4><p>言葉を映像に変える</p><span class="arrow">→</span></div>
-      <div class="menu-card" data-open="s-test"><span class="ic">🏁</span><h4>実力テスト</h4><p>到達桁数で称号判定</p><span class="arrow">→</span></div>
-      <div class="menu-card" data-open="s-reading-test"><span class="ic">📏</span><h4>速読テスト</h4><p>速度×理解度を測定</p><span class="arrow">→</span></div>
-      <div class="menu-card" data-open="s-log"><span class="ic">📈</span><h4>記録</h4><p>練習履歴とグラフ</p><span class="arrow">→</span></div>
-    </div>
-  </div>
-
-  <!-- 意義 -->
-  <div class="detail" id="s-about" data-detail-group="shun">
-    <div class="backbar"><button class="back-btn" data-back="shun">← 一覧へ</button><span class="detail-title">📚 意義とやり方</span></div>
-    <div class="card">
-      <h3>なぜ速く読めるようになるのか</h3>
-      <p class="lead">私たちは多くの場合、文字を心の中で音に変えながら読んでいます（黙読）。この音声化が、読む速さの上限を決めてしまいます。瞬読では、音にする前に文字を“形”や“かたまり”として受け取る練習を重ね、視野を広げて一度に多くを捉えられるようにしていきます。</p>
-      <div class="why"><b>二つの土台。</b> ひとつは<b>観察力</b>――目に入った全体を、細部まで一瞬で掴む力。もうひとつは<b>イメージ力</b>――読んだ言葉を映像として思い描く力です。『瞬読ドリル』もこの二つを軸にしています。本サイトのトレーニングは、すべてこのどちらか（または両方）を鍛えるように作られています。</div>
-    </div>
-    <div class="card">
-      <h3>効果的なやり方・手順</h3>
-      <p class="lead">難しく考えず、次の流れで毎日少しずつ続けるのがおすすめです。</p>
-      <div class="why">
-        ① まず<b>フォントを少し大きく</b>して、文字を「形」として感じる準備をします。<br>
-        ② <b>フラッシュ／単語</b>で、表示されたものを声にせず一瞬で受け取る練習。読めなくても気にしない。<br>
-        ③ <b>円形／ランダム</b>で、視点を一点に固定せず、画面全体をふわっと眺める感覚をつかむ。<br>
-        ④ <b>右脳沈黙モード</b>を使い、刺激のあとに黒い画面で「言葉にせず余韻だけ」を味わう。<br>
-        ⑤ 慣れたら表示時間を短く、文字数を多く。週に一度は<b>実力テスト</b>で伸びを確認しましょう。
-      </div>
-    </div>
-  </div>
-
-  <!-- 共通設定 -->
-  <div class="detail" id="s-setup" data-detail-group="shun">
-    <div class="backbar"><button class="back-btn" data-back="shun">← 一覧へ</button><span class="detail-title">⚙️ 共通設定</span></div>
-    <div class="card">
-      <h3>⚙️ 共通設定</h3>
-      <div class="why"><b>意義：</b>瞬読の効果を底上げする土台の設定です。文字を大きくすると“形”の印象が強まり黙読が起きにくく、沈黙モードは右脳的な余韻を残します。<b>やり方：</b>練習前にここを整え、フラッシュ等の題材テキストもここで読み込みます。</div>
-      <label>フォント倍率 <span id="fsVal">1.00</span>倍</label>
-      <input type="range" id="fontScale" min="0.8" max="2.5" step="0.05" value="1">
-      <div class="row" style="margin-top:.6rem">
-        <div><label><input type="checkbox" id="silenceOn"> 右脳沈黙モードを使う</label></div>
-        <div><label>沈黙の秒数（推奨3〜5）</label><input type="number" id="silenceSec" value="3" min="1" max="10"></div>
-      </div>
-      <div class="divider"></div>
-      <h3 style="font-size:1.05rem">📚 練習テキストを選ぶ（フラッシュ用）</h3>
-      <select id="textSelect"><option value="">―― テキストを選ぶ ――</option></select>
-      <div class="help" id="textStatus">テキストを選択してください。</div>
-    </div>
-  </div>
-
-  <!-- フラッシュ -->
-  <div class="detail" id="s-flash" data-detail-group="shun">
-    <div class="backbar"><button class="back-btn" data-back="shun">← 一覧へ</button><span class="detail-title">🧠 フラッシュトレーニング</span></div>
-    <div class="card">
-      <span class="tag">観察力 ＋ 黙読抑制</span>
-      <h3>🧠 フラッシュトレーニング</h3>
-      <div class="why"><b>意義：</b>テキストを一定の量ずつ高速表示し、声にする前に視覚で受け取る回路を育てます。<b>やり方：</b>表示されるかたまりを「読もう」とせず、ぼんやり全体を見るだけ。題材は「共通設定」で読み込んだテキストです。</div>
-      <div class="row3">
-        <div><label>表示単位</label>
-          <select id="flashMode">
-            <option value="c10">10文字</option><option value="c20">20文字</option>
-            <option value="c30">30文字</option><option value="s1">1文</option>
-            <option value="s2">2文</option><option value="para">段落</option>
-          </select></div>
-        <div><label>表示速度(秒)</label><input type="number" id="flashSpeed" value="1" min="0.2" max="4" step="0.1"></div>
-        <div><label>練習時間(分)</label><input type="number" id="flashTime" value="2" min="1" max="30"></div>
-      </div>
-      <div class="btn-row"><button class="btn" id="flashStart">開始</button><button class="btn ghost" id="flashStop">停止</button></div>
-      <div class="stage" id="flashStage">―</div>
-      <div class="timer" id="flashTimer"></div>
-    </div>
-  </div>
-
-  <!-- 単語 -->
-  <div class="detail" id="s-word" data-detail-group="shun">
-    <div class="backbar"><button class="back-btn" data-back="shun">← 一覧へ</button><span class="detail-title">🪄 単語トレーニング</span></div>
-    <div class="card">
-      <span class="tag">瞬間認識</span>
-      <h3>🪄 単語トレーニング</h3>
-      <div class="why"><b>意義：</b>短い語を次々に切り替え、ひと目で意味まで届かせる瞬発力を鍛えます。<b>やり方：</b>内蔵の日常単語（4〜10文字）から出題。文字の並びはシャッフルされるので、形のまとまりで一気に読み取りましょう。</div>
-      <div class="row3">
-        <div><label>表示速度(秒)</label><input type="number" id="wordSpeed" value="0.5" min="0.1" max="3" step="0.1"></div>
-        <div><label>練習時間(分)</label><input type="number" id="wordTime" value="2" min="1" max="30"></div>
-        <div><label>書字方向</label><select id="wordDir"><option value="h">横書き</option><option value="v">縦書き</option></select></div>
-      </div>
-      <div class="btn-row"><button class="btn" id="wordStart">開始</button><button class="btn ghost" id="wordStop">停止</button></div>
-      <div class="stage" id="wordStage">―</div>
-      <div class="timer" id="wordTimer"></div>
-    </div>
-  </div>
-
-  <!-- 円形 -->
-  <div class="detail" id="s-circle" data-detail-group="shun">
-    <div class="backbar"><button class="back-btn" data-back="shun">← 一覧へ</button><span class="detail-title">🌀 円形トレーニング</span></div>
-    <div class="card">
-      <span class="tag">視野拡大</span>
-      <h3>🌀 円形トレーニング</h3>
-      <div class="why"><b>意義：</b>文字を円状に置くことで、視点を一点に止めず“面”で捉える感覚を養います。<b>やり方：</b>内蔵の日常単語を円状に配置（並びはシャッフル）。中心をぼんやり見て、周囲の文字を同時に感じてみてください。</div>
-      <div class="row">
-        <div><label>切替速度(秒)</label><input type="number" id="circleSpeed" value="1.2" min="0.3" max="4" step="0.1"></div>
-        <div><label>練習時間(分)</label><input type="number" id="circleTime" value="2" min="1" max="30"></div>
-      </div>
-      <div class="btn-row"><button class="btn" id="circleStart">開始</button><button class="btn ghost" id="circleStop">停止</button></div>
-      <div class="field" id="circleField"></div>
-      <div class="timer" id="circleTimer"></div>
-    </div>
-  </div>
-
-  <!-- ランダム -->
-  <div class="detail" id="s-rand" data-detail-group="shun">
-    <div class="backbar"><button class="back-btn" data-back="shun">← 一覧へ</button><span class="detail-title">🎲 ランダム配置トレーニング</span></div>
-    <div class="card">
-      <span class="tag">全体把握</span>
-      <h3>🎲 ランダム配置トレーニング</h3>
-      <div class="why"><b>意義：</b>バラバラに散った文字を一瞬で拾い集める練習。周辺視野と注意の広さを鍛えます。<b>やり方：</b>内蔵の日常単語の文字を画面内にばら撒きます。「どこに何があったか」を後から思い出すつもりで眺めましょう。</div>
-      <div class="row">
-        <div><label>切替速度(秒)</label><input type="number" id="randSpeed" value="1.2" min="0.3" max="4" step="0.1"></div>
-        <div><label>練習時間(分)</label><input type="number" id="randTime" value="2" min="1" max="30"></div>
-      </div>
-      <div class="btn-row"><button class="btn" id="randStart">開始</button><button class="btn ghost" id="randStop">停止</button></div>
-      <div class="field" id="randField"></div>
-      <div class="timer" id="randTimer"></div>
-    </div>
-  </div>
-
-  <!-- 観察力 -->
-  <div class="detail" id="s-obs" data-detail-group="shun">
-    <div class="backbar"><button class="back-btn" data-back="shun">← 一覧へ</button><span class="detail-title">👁 観察力トレーニング</span></div>
-    <div class="card">
-      <span class="tag">観察力</span>
-      <h3>👁 観察力トレーニング</h3>
-      <div class="why"><b>意義：</b>数字のマス目を一瞬だけ見て、そのまま再現します。全体を一度に写し取る“観察の解像度”を測り、鍛えます。<b>やり方：</b>表示中は読み上げず、画像のように丸ごと記憶。消えたら入力します。</div>
-      <div class="row3">
-        <div><label>マス(縦×横)</label>
-          <select id="obsSize"><option value="2">2×2</option><option value="3" selected>3×3</option><option value="4">4×4</option></select></div>
-        <div><label>表示時間(秒)</label><input type="number" id="obsSec" value="2" min="0.5" max="10" step="0.5"></div>
-        <div style="display:flex;align-items:flex-end"><button class="btn" id="obsStart" style="width:100%">表示する</button></div>
-      </div>
-      <div class="stage big" id="obsStage">「表示する」を押すとマスが現れます</div>
-      <div id="obsAnswer" style="display:none">
-        <label>見えた数字を上の行から、左→右の順に入力</label>
-        <input type="text" id="obsInput" inputmode="numeric" placeholder="例: 3×3なら9桁">
-        <div class="btn-row"><button class="btn" id="obsCheck">採点</button></div>
-      </div>
-      <div class="pills" id="obsResult"></div>
-    </div>
-  </div>
-
-  <!-- イメージ力 -->
-  <div class=”detail” id=”s-img” data-detail-group=”shun”>
-    <div class=”backbar”><button class=”back-btn” data-back=”shun”>← 一覧へ</button><span class=”detail-title”>✨ イメージ力トレーニング</span></div>
-    <div class=”card”>
-      <span class=”tag”>イメージ力</span>
-      <h3>✨ イメージ力トレーニング</h3>
-      <div class=”why”><b>意義：</b>短い情景文を数行に分けて一瞬見て、頭の中で”映像”として組み立てる練習。言葉をそのまま映像に変換する回路を育てることで、速読時の理解速度が上がります。<b>やり方：</b>表示された文の断片をすべてつなぎ、その場面を映像として思い浮かべてください。声に出して読まず、視覚的な印象のまま受け取るのがポイントです。</div>
-      <div class=”row”>
-        <div><label>表示時間(秒)</label><input type=”number” id=”imgSec” value=”4” min=”1” max=”15”></div>
-        <div><label>書字方向</label><select id=”imgDir”><option value=”h”>横書き</option><option value=”v”>縦書き</option></select></div>
-      </div>
-      <div class=”btn-row”>
-        <button class=”btn” id=”imgStart”>表示する</button>
-        <button class=”btn ghost” id=”imgNext”>次の文へ →</button>
-      </div>
-      <div class=”stage” id=”imgStage” style=”min-height:12rem;display:flex;align-items:center;justify-content:center;”>
-        <span style=”color:var(--muted)”>「表示する」を押すと文が現れます</span>
-      </div>
-      <div id=”imgAnswer” style=”display:none;margin-top:.8rem”>
-        <p style=”color:var(--muted);font-size:.9rem;margin:0 0 .5rem”>映像は浮かびましたか？（任意）</p>
-        <div class=”btn-row” style=”gap:.5rem”>
-          <button class=”btn” id=”imgGood” style=”background:var(--teal);border-color:var(--teal)”>🌟 鮮明に見えた</button>
-          <button class=”btn ghost” id=”imgOk”>✓ 見えた</button>
-          <button class=”btn ghost” id=”imgNg” style=”color:var(--muted)”>△ ぼんやり</button>
-        </div>
-      </div>
-      <div class=”pills” id=”imgResult”></div>
-    </div>
-  </div>
-
-  <!-- 実力テスト -->
-  <div class="detail" id="s-test" data-detail-group="shun">
-    <div class="backbar"><button class="back-btn" data-back="shun">← 一覧へ</button><span class="detail-title">🏁 実力チェックテスト</span></div>
-    <div class="card">
-      <h3>🏁 瞬読 実力チェックテスト</h3>
-      <div class="why"><b>内容：</b>数字列が一瞬（0.6秒）だけ表示されます。最初は3桁、正解するごとに1桁ずつ増えていきます。どこまで正確に再現できるかでレベルを判定します。</div>
-      <div class="btn-row"><button class="btn" id="stStart">テスト開始</button></div>
-      <div class="stage big" id="stStage">準備ができたら「テスト開始」</div>
-      <div id="stAnswer" style="display:none">
-        <label>見えた数字を入力</label>
-        <input type="text" id="stInput" inputmode="numeric">
-        <div class="btn-row"><button class="btn" id="stCheck">回答</button></div>
-      </div>
-      <div class="pills" id="stResult"></div>
-      <div class="pills" id="stTitle"></div>
-    </div>
-  </div>
-
-  <!-- 速読テスト -->
-  <div class="detail" id="s-reading-test" data-detail-group="shun">
-    <div class="backbar"><button class="back-btn" data-back="shun">← 一覧へ</button><span class="detail-title">📏 速読テスト</span></div>
-    <div class="card">
-      <span class="tag">速読テスト</span>
-      <h3>📏 速読テスト</h3>
-      <div class="why"><b>意義：</b>現在の読書速度（文字/分）と理解度を測定します。日本人の平均黙読速度は500〜800字/分、速読トレーニング後は2000字/分以上を目指せます。<b>やり方：</b>テキストを選んで「開始」を押し、全文を読んだら「読み終わった」を押します。続けて理解度テスト（4問）に答えてください。</div>
-      <div class="row">
-        <div style="flex:1"><label>テキストを選ぶ</label>
-          <select id="rtSelect"><option value="">― テキストを選択 ―</option></select>
-        </div>
-        <div style="display:flex;align-items:flex-end"><button class="btn" id="rtStart">開始</button></div>
-      </div>
-      <div id="rtReading" style="display:none">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin:.6rem 0">
-          <span style="font-size:.9rem;color:var(--muted)">経過時間</span>
-          <span id="rtTimer" style="font-size:1.4rem;font-weight:700;font-variant-numeric:tabular-nums">0:00</span>
-        </div>
-        <div class="reading-text" id="rtText"></div>
-        <div class="btn-row" style="margin-top:.8rem"><button class="btn" id="rtDone">読み終わった ✓</button></div>
-      </div>
-      <div id="rtQuiz" style="display:none">
-        <h4 style="margin:.8rem 0 .4rem">📝 理解度テスト（4問）</h4>
-        <div id="rtQList"></div>
-        <div class="btn-row"><button class="btn" id="rtScore">採点する</button></div>
-      </div>
-      <div class="pills" id="rtResult"></div>
-    </div>
-  </div>
-
-  <!-- 記録 -->
-  <div class="detail" id="s-log" data-detail-group="shun">
-    <div class="backbar"><button class="back-btn" data-back="shun">← 一覧へ</button><span class="detail-title">📈 練習記録</span></div>
-    <div class="card">
-      <h3>📈 練習記録</h3>
-      <div class="pills" id="shunStats"></div>
-      <canvas id="shunChart"></canvas>
-      <div class="btn-row">
-        <button class="btn ghost" id="shunCsv">CSV出力</button>
-        <button class="btn danger" id="shunReset">記録をリセット</button>
-      </div>
-      <table><thead><tr><th>日時</th><th>種類</th><th>分</th><th>速度/結果</th></tr></thead><tbody id="shunTable"></tbody></table>
-    </div>
-  </div>
 </section>
 
 <!-- ============ 記憶法 ============ -->
@@ -590,8 +318,8 @@ canvas{margin-top:1rem;max-height:300px;}
     <div class="card">
       <span class="tag" style="--accent:var(--terra);--accent-d:var(--terra-d)">場所法</span>
       <h3>🏛 場所法（記憶の宮殿）</h3>
-      <p class="lead">自宅や学校など、すでに体に染みついた場所の順路を“棚”として借り、覚えたいものをその地点に一つずつ置いていく方法です。玄関に牛乳、廊下にたまご……というふうに、見慣れた風景の中へ情報を配置します。思い出すときは、頭の中でその場所を歩き、置いたものを順番に拾い集めます。古代ギリシャ・ローマの弁論家が長い演説を覚えるのに使ったとされ、いまも記憶力競技の主役です。</p>
-      <div class="why"><b>想像力への働き：</b>「玄関に牛乳パックが転がっている」といった、ありえない情景をありありと思い描くほど記憶に残ります。普段眠っている“心の中で映像を立ち上げる力”を呼び起こします。<br><b>創造力への働き：</b>無関係なもの同士を一つの場面に結びつけるため、連想の幅が広がります。突飛な組み合わせを面白がる発想の柔らかさが育ちます。<br><b>脳への変化：</b>位置情報を扱う海馬と、イメージを描く視覚野が同時に働きます。空間記憶と視覚記憶を結びつける訓練として知られ、繰り返すことでこの結びつきが強まると考えられています。</div>
+      <p class="lead">自宅や学校など、すでに体に染みついた場所の順路を"棚"として借り、覚えたいものをその地点に一つずつ置いていく方法です。玄関に牛乳、廊下にたまご……というふうに、見慣れた風景の中へ情報を配置します。思い出すときは、頭の中でその場所を歩き、置いたものを順番に拾い集めます。古代ギリシャ・ローマの弁論家が長い演説を覚えるのに使ったとされ、いまも記憶力競技の主役です。</p>
+      <div class="why"><b>想像力への働き：</b>「玄関に牛乳パックが転がっている」といった、ありえない情景をありありと思い描くほど記憶に残ります。普段眠っている"心の中で映像を立ち上げる力"を呼び起こします。<br><b>創造力への働き：</b>無関係なもの同士を一つの場面に結びつけるため、連想の幅が広がります。突飛な組み合わせを面白がる発想の柔らかさが育ちます。<br><b>脳への変化：</b>位置情報を扱う海馬と、イメージを描く視覚野が同時に働きます。空間記憶と視覚記憶を結びつける訓練として知られ、繰り返すことでこの結びつきが強まると考えられています。</div>
     </div>
     <div class="card">
       <span class="tag" style="--accent:var(--terra);--accent-d:var(--terra-d)">ジャーニー法</span>
@@ -602,8 +330,8 @@ canvas{margin-top:1rem;max-height:300px;}
     <div class="card">
       <span class="tag" style="--accent:var(--terra);--accent-d:var(--terra-d)">ストーリー法・連想</span>
       <h3>📖 ストーリー法（連想結合）</h3>
-      <p class="lead">バラバラの言葉を、一本の物語でつないで覚える方法です。「リンゴ・電車・ライオン」なら、“リンゴが電車に乗ってライオンに会いに行く”のように、登場順を守った奇妙な話を作ります。物語は鎖のようにつながっているので、最初の場面を思い出せば、芋づる式に次々とよみがえります。</p>
-      <div class="why"><b>想像力への働き：</b>静止した単語に動きと感情を与え、頭の中で短い映画を上映します。語と語の間を埋める“あいだの情景”を思い描く力が鍛えられます。<br><b>創造力への働き：</b>脈絡のないものを無理やりつなぐほど物語は面白くなり、記憶にも残ります。常識にとらわれない発想・ストーリーづくりの瞬発力が伸びます。<br><b>脳への変化：</b>言葉を扱う言語野と、情景を描く視覚的想像が連動します。意味のつながり（文脈）を作ると記憶が定着しやすいという、人の脳の性質をそのまま利用した方法です。</div>
+      <p class="lead">バラバラの言葉を、一本の物語でつないで覚える方法です。「リンゴ・電車・ライオン」なら、"リンゴが電車に乗ってライオンに会いに行く"のように、登場順を守った奇妙な話を作ります。物語は鎖のようにつながっているので、最初の場面を思い出せば、芋づる式に次々とよみがえります。</p>
+      <div class="why"><b>想像力への働き：</b>静止した単語に動きと感情を与え、頭の中で短い映画を上映します。語と語の間を埋める"あいだの情景"を思い描く力が鍛えられます。<br><b>創造力への働き：</b>脈絡のないものを無理やりつなぐほど物語は面白くなり、記憶にも残ります。常識にとらわれない発想・ストーリーづくりの瞬発力が伸びます。<br><b>脳への変化：</b>言葉を扱う言語野と、情景を描く視覚的想像が連動します。意味のつながり（文脈）を作ると記憶が定着しやすいという、人の脳の性質をそのまま利用した方法です。</div>
     </div>
   </div>
 
@@ -685,7 +413,7 @@ canvas{margin-top:1rem;max-height:300px;}
     <div class="backbar"><button class="back-btn" data-back="mem">← 一覧へ</button><span class="detail-title">🎴 ドミニクシステム</span></div>
     <div class="card">
       <h3>🎴 ドミニクシステム</h3>
-      <div class="why"><b>意義：</b>2桁の数字を「人物＋行動＋物」に変換して覚える方法です。数字をそのまま覚える代わりに、登場人物が何かをしている“場面”にすると、長い数字列も物語として再生できます。</div>
+      <div class="why"><b>意義：</b>2桁の数字を「人物＋行動＋物」に変換して覚える方法です。数字をそのまま覚える代わりに、登場人物が何かをしている"場面"にすると、長い数字列も物語として再生できます。</div>
       <p class="lead">数字→文字の変換ルール（ドミニク式）。2桁の数字を2つの文字（イニシャル）に直し、そのイニシャルの人物を割り当てます。</p>
       <table id="domLetter"><thead><tr><th>数字</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr></thead>
       <tbody><tr><td><b>文字</b></td><td>O</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>S</td><td>G</td><td>H</td><td>N</td></tr></tbody></table>
@@ -796,7 +524,7 @@ canvas{margin-top:1rem;max-height:300px;}
           <p class="lead" style="font-size:.9rem">●が表示されます。10秒覚えたら全て消えます。同じ位置をクリックして再現してください。</p>
           <div class="spatial-grid" id="mlSpatialGrid" style="grid-template-columns:repeat(4,52px)"></div>
           <div class="btn-row" style="margin-top:.6rem">
-            <button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d)" id="mlSpatialConfirm" style="display:none">これで回答する</button>
+            <button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d);display:none" id="mlSpatialConfirm">これで回答する</button>
           </div>
           <div class="pills" id="mlSpatialResult"></div>
         </div>
@@ -840,8 +568,6 @@ canvas{margin-top:1rem;max-height:300px;}
 
 </main>
 
-<div id="silence"><div class="box"><div class="prog"><i id="silBar"></i></div><div class="cnt" id="silCnt"></div></div></div>
-
 <script>
 /* ============================================================
    ユーティリティ
@@ -853,11 +579,17 @@ const pad2=n=>String(n).padStart(2,"0");
 const fmt=sec=>`${pad2(Math.floor(sec/60))}:${pad2(sec%60)}`;
 const nowStr=()=>new Date().toLocaleString();
 const sample=(arr,n)=>{const a=[...arr];const o=[];while(o.length<n&&a.length)o.push(a.splice(rand(0,a.length-1),1)[0]);return o;};
-const splitWords=t=>t.replace(/\s+/g," ").split(/[、。「」（）()・,.\s]+/).filter(w=>w.length>=1&&w.length<=12);
-const splitSents=t=>t.split(/[。\n！？]/).map(s=>s.trim()).filter(s=>s.length>=2);
-/* 日常単語リスト（約1000語）：単語/円形/ランダムで使用 */
+
+/* 日常単語リスト（記憶術の単語記憶・実力テストで使用） */
 let WORD_LIST=["ラーメン","コロッケ","ハンバーグ","オムレツ","ヨーグルト","ジュース","コーヒー","ウイスキー","さくらんぼ","パイナップル","オレンジ","グレープフルーツ","きゅうり","ピーマン","キャベツ","ほうれん草","にんじん","じゃがいも","れんこん","かぼちゃ","とうもろこし","にんにく","しょうが","しいたけ","ケチャップ","マヨネーズ","こしょう","はちみつ","チョコレート","クッキー","せんべい","ポテトチップス","ドーナツ","おにぎり","サンドイッチ","ハンバーガー","赤ちゃん","パソコン","電子レンジ","アイロン","ドライヤー","コンセント","マフラー","スリッパ","歯ブラシ","シャンプー","フライパン","スプーン","フォーク","消しゴム","ホチキス","クリップ","懐中電灯","スカート","ワンピース","ジャケット","セーター","カーディガン","パジャマ","ネクタイ","スカーフ","ネックレス","イヤリング","ブレスレット","タクシー","トラック","ヘリコプター","ロケット","横断歩道","トンネル","マンション","アパート","スーパー","コンビニ","デパート","見つける","映画鑑賞","音楽鑑賞","写真撮影","トランプ","サッカー","ボクシング","マラソン","スケート","ボウリング","ガスコンロ","空気清浄機","郵便番号","段ボール","暗証番号","下ごしらえ","包丁さばき","盛り付け","食器洗い","リサイクル","火の用心","自己紹介","名刺交換","くしゃみ","しゃっくり","夜更かし","朝ごはん","昼ごはん","晩ごはん","オムライス","スパゲティ","チャーハン","カレーライス","コーヒー牛乳","オレンジジュース","アイスクリーム","ホットケーキ","食器洗い機","目覚まし時計","歯みがき粉","せっけん","くつした","ハンカチ","ティッシュ","パトカー","路面電車","高速道路","高等学校","専門学校","携帯電話","イヤホン","プリンター","天気予報","雨上がり","木枯らし","五月晴れ","木漏れ日","ひまわり","あじさい","たんぽぽ","チューリップ","コスモス","すずらん","紅葉狩り","どんぐり","魚屋さん","花屋さん","文房具店","修学旅行","ブランコ","ジャングルジム","シーソー","押し入れ","物干し竿","ベランダ","待ち合わせ","買い物かご","買い物袋","値引きシール","賞味期限","消費期限","電子マネー","自動販売機","回転寿司","立ち食いそば","食べ放題","飲み放題","持ち帰り","出前注文","宅配ピザ","手作り弁当","行楽弁当","炊き込みご飯","焼きおにぎり","すき焼き","しゃぶしゃぶ","野菜炒め","肉じゃが","唐揚げ定食","生姜焼き","ちらし寿司","果物かご","季節の果物","採れたて野菜","産地直送","無農薬野菜","朝採り卵","地元の特産","名物料理","郷土料理","旬の食材","うろこ雲","にわか雨","ぼたん雪","つむじ風","向かい風","けもの道","通勤電車","満員電車","最終電車","始発電車","各駅停車","快速電車","特急列車","寝台列車","乗換案内","自動改札","定期入れ","交通系カード","優先座席","車内放送","信号待ち","ロータリー","立体駐車場","台所用品","調理器具","包丁研ぎ","洗濯ばさみ","洗濯ネット","衣類乾燥機","アイロン台","ハンガー","衣装ケース","掃除道具","ちりとり","雑巾がけ","床みがき","分別ごみ","電気スタンド","間接照明","天井照明","延長コード","充電ケーブル","電動歯ブラシ","うがい薬","のどあめ","目薬さし","筆記用具","修正テープ","蛍光ペン","油性ペン","鉛筆削り","定規セット","コンパス","給食当番","掃除当番","黒板消し","ピアノ教室","そろばん","書道教室","水泳教室","通信教育","小遣い帳","へそくり","おこづかい","つけ払い","方位磁石","観光案内","名所めぐり","史跡めぐり","食べ歩き","受付窓口","薬局窓口","順番待ち","整理番号","案内表示","呼び出し","目覚まし","寝ぼけ眼","ささやき","呼びかけ","受け答え","口げんか"];
-const shuffleChars=w=>{const a=[...w];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.join("");};
+
+/* 記憶法用単語リスト */
+let MEM_WORD_LIST=[...WORD_LIST];
+fetch("./texts/memory-word-list.txt").then(r=>r.ok?r.text():null).then(t=>{
+  if(!t)return;
+  const ws=t.split(/\r?\n/).map(w=>w.trim()).filter(w=>w&&!w.startsWith("#")&&w.length>=1&&w.length<=8);
+  if(ws.length>=10)MEM_WORD_LIST.splice(0,MEM_WORD_LIST.length,...ws);
+}).catch(()=>{});
 
 /* ============================================================
    タブ
@@ -869,7 +601,6 @@ function setupTabs(group){
       $$(`[data-group="${group}"] .nav-tab`).forEach(t=>t.classList.remove("active"));
       tab.classList.add("active");
       $$(`.main-section[data-pane-group="${group}"]`).forEach(p=>p.classList.toggle("show",p.id===target));
-      if(target==="m-shun")drawShunChart();
       if(target==="m-mem"){drawMemChart();renderMemTitles();}
     });
   });
@@ -883,7 +614,6 @@ function openDetail(id){
   document.getElementById(grp+"-menu").classList.remove("show");
   $$(`.detail[data-detail-group="${grp}"]`).forEach(d=>d.classList.remove("show"));
   el.classList.add("show");
-  if(id==="s-log")drawShunChart();
   if(id==="me-log"){drawMemChart();renderMemTitles();}
   if(id==="me-dom")renderDomGrid();
   window.scrollTo({top:0,behavior:"smooth"});
@@ -903,261 +633,6 @@ $$("[data-jump]").forEach(b=>b.addEventListener("click",()=>{
   $$('.main-section').forEach(p=>p.classList.toggle("show",p.id===t));
   window.scrollTo({top:0,behavior:"smooth"});
 }));
-
-/* ============================================================
-   練習テキスト（内蔵サンプル＋GitHub＋貼付＋ファイル）
-============================================================ */
-const BUILTIN={
-  "五感を研ぎ澄ます効果":`視覚、聴覚、嗅覚、味覚、触覚。人間はこの五つの感覚器官を通じて外界の情報を受け取り、世界を認識している。しかし現代社会において、私たちの五感はかつてないほど刺激過多の状態に置かれている。スマートフォンの画面から流れ込む大量の視覚情報、絶え間なく耳に届く都市の騒音、人工的な香料や添加物に慣れた嗅覚と味覚。このような環境の中で、私たちの感覚は本来の鋭敏さを失いつつある。五感を研ぎ澄ますことには、単に感覚が鋭くなる以上の深い効果がある。豊かな感覚体験は神経回路の形成と強化を促し、感情を豊かにし、創造性を解放し、共感力を高め、記憶を鮮明にする。感覚は私たちが世界を受け取る窓であり、その窓を丁寧に磨くことで、同じ世界がまったく異なる輝きと深みを持って現れてくる。`,
-  "短文サンプル":`朝の光が窓から差し込み、机の上のコップが小さな虹を作った。彼女は本を閉じ、ゆっくりと深呼吸をした。今日という一日が、静かに始まろうとしている。`
-};
-let currentText=BUILTIN["五感を研ぎ澄ます効果"];
-let wordPool=[], sentPool=[];
-function rebuildPools(){
-  wordPool=splitWords(currentText); sentPool=splitSents(currentText);
-  if(wordPool.length<4)wordPool=["朝","光","机","虹","深呼吸","静か","一日","本"];
-  if(sentPool.length<2)sentPool=["朝の光が差し込む","今日が静かに始まる"];
-}
-function setText(t,label){currentText=t;rebuildPools();$("#textStatus").textContent=`読み込み済み：${label}（${t.length}字）`;}
-rebuildPools();
-// 瞬読用単語リストをテキストファイルから自動読み込み
-fetch("./texts/word-list.txt").then(r=>r.ok?r.text():null).then(t=>{
-  if(!t)return;
-  const ws=t.split(/\r?\n/).map(w=>w.trim()).filter(w=>w&&!w.startsWith("#")&&w.length>=4&&w.length<=9);
-  if(ws.length>=10)WORD_LIST.splice(0,WORD_LIST.length,...ws);
-}).catch(()=>{});
-// 記憶法用単語リスト
-let MEM_WORD_LIST=[...WORD_LIST];
-fetch("./texts/memory-word-list.txt").then(r=>r.ok?r.text():null).then(t=>{
-  if(!t)return;
-  const ws=t.split(/\r?\n/).map(w=>w.trim()).filter(w=>w&&!w.startsWith("#")&&w.length>=1&&w.length<=8);
-  if(ws.length>=10)MEM_WORD_LIST.splice(0,MEM_WORD_LIST.length,...ws);
-}).catch(()=>{});
-// イメージ力用短文リスト
-let IMG_SENTENCES=[];
-let imgIdx=0;
-fetch("./texts/image-sentences.txt").then(r=>r.ok?r.text():null).then(t=>{
-  if(!t)return;
-  const ss=t.split(/\r?\n/).map(s=>s.trim()).filter(s=>s&&!s.startsWith("#")&&s.length>=10&&s.length<=40);
-  if(ss.length>=5)IMG_SENTENCES=ss;
-}).catch(()=>{});
-// dropdown 初期（内蔵）
-(function(){const sel=$("#textSelect");Object.keys(BUILTIN).forEach(k=>{const o=document.createElement("option");o.value="builtin:"+k;o.textContent=k+"（内蔵）";sel.appendChild(o);});})();
-// texts/index.json を自動フェッチしてドロップダウンに追加
-let textManifest=[];
-fetch("./texts/index.json").then(r=>r.ok?r.json():null).then(list=>{
-  if(!list)return;
-  textManifest=list;
-  const sel=$("#textSelect");
-  const rtSel=$("#rtSelect");
-  list.forEach(it=>{
-    const o=document.createElement("option");
-    o.dataset.local="1";
-    o.value="./"+it.file;
-    o.textContent=it.title+"（テキスト）";
-    sel.appendChild(o);
-    if(rtSel){const o2=document.createElement("option");o2.value=it.id;o2.textContent=it.title;rtSel.appendChild(o2);}
-  });
-}).catch(()=>{});
-$("#textSelect").addEventListener("change",async e=>{
-  const v=e.target.value;if(!v)return;
-  if(v.startsWith("builtin:")){const k=v.slice(8);setText(BUILTIN[k],k);}
-  else{
-    try{$("#textStatus").textContent="取得中…";const r=await fetch(v);const t=await r.text();setText(t,v.split("/").pop());}
-    catch(err){$("#textStatus").textContent="取得に失敗しました（URL/公開設定/CORSを確認）。";}
-  }
-});
-
-/* フォント倍率 */
-$("#fontScale").addEventListener("input",e=>{document.documentElement.style.setProperty("--fs-mult",e.target.value);$("#fsVal").textContent=Number(e.target.value).toFixed(2);});
-
-/* ============================================================
-   右脳沈黙モード
-============================================================ */
-let silenceLock=false;
-function beginSilence(){
-  const sec=Number($("#silenceSec").value)||3;
-  silenceLock=true;const ov=$("#silence");ov.style.display="flex";
-  const bar=$("#silBar"),cnt=$("#silCnt");let rem=sec;bar.style.width="100%";cnt.textContent=`${rem}秒：言葉にせず、印象だけを味わう`;
-  const iv=setInterval(()=>{rem--;bar.style.width=(rem/sec*100)+"%";cnt.textContent=`${rem}秒：言葉にせず、印象だけを味わう`;
-    if(rem<=0){clearInterval(iv);ov.style.display="none";silenceLock=false;}},1000);
-}
-
-/* ============================================================
-   瞬読：記録
-============================================================ */
-const SHUN_KEY="shun_history";
-const getShun=()=>JSON.parse(localStorage.getItem(SHUN_KEY)||"[]");
-const setShun=d=>localStorage.setItem(SHUN_KEY,JSON.stringify(d));
-function addShun(type,min,res){const h=getShun();h.push({date:nowStr(),type,min:Number(min)||0,res:String(res)});setShun(h);drawShunChart();}
-let shunChart;
-function drawShunChart(){
-  const h=getShun();const tbody=$("#shunTable");
-  tbody.innerHTML=h.slice(-12).reverse().map(x=>`<tr><td>${x.date}</td><td>${x.type}</td><td>${x.min}</td><td>${x.res}</td></tr>`).join("")||`<tr><td colspan="4" style="color:var(--muted)">記録なし</td></tr>`;
-  const byType={};h.forEach(x=>byType[x.type]=(byType[x.type]||0)+(x.min||0));
-  $("#shunStats").innerHTML=Object.keys(byType).length?Object.entries(byType).map(([k,v])=>`<span class="pill">${k}：計${v}分</span>`).join(""):`<span class="pill">まだ記録がありません</span>`;
-  const map={};h.forEach(x=>{const d=x.date.split(" ")[0];map[d]=(map[d]||0)+(x.min||0);});
-  const ctx=$("#shunChart");if(!ctx)return;if(shunChart)shunChart.destroy();
-  shunChart=new Chart(ctx,{type:"bar",data:{labels:Object.keys(map),datasets:[{label:"練習時間(分/日)",data:Object.values(map),backgroundColor:"rgba(47,111,100,.55)"}]},options:{plugins:{legend:{display:true}},scales:{y:{beginAtZero:true}}}});
-}
-$("#shunReset").addEventListener("click",()=>{if(confirm("瞬読の記録をすべて削除しますか？")){localStorage.removeItem(SHUN_KEY);drawShunChart();}});
-$("#shunCsv").addEventListener("click",()=>{const h=getShun();if(!h.length)return alert("記録なし");
-  const csv="日時,種類,分,結果\n"+h.map(x=>`${x.date},${x.type},${x.min},${x.res}`).join("\n");
-  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="shundoku_history.csv";a.click();});
-
-/* ============================================================
-   瞬読：フラッシュ / 単語 / 円形 / ランダム
-============================================================ */
-function chunkText(mode){
-  if(mode.startsWith("c")){const n=Number(mode.slice(1));const arr=[];for(let i=0;i<currentText.length;i+=n)arr.push(currentText.slice(i,i+n));return arr;}
-  if(mode==="s1")return sentPool.map(s=>s+"。");
-  if(mode==="s2"){const a=[];for(let i=0;i<sentPool.length;i+=2)a.push(sentPool.slice(i,i+2).join("。")+"。");return a;}
-  if(mode==="para")return currentText.split(/\n+/).filter(p=>p.trim());
-  return [currentText];
-}
-let flashIv,flashCd;
-$("#flashStart").onclick=()=>{
-  stopFlash();const chunks=chunkText($("#flashMode").value);if(!chunks.length)return alert("テキストを読み込んでください");
-  let total=Number($("#flashTime").value)*60,spd=Number($("#flashSpeed").value)*1000,i=0;
-  $("#flashTimer").textContent=fmt(total);
-  flashCd=setInterval(()=>{total--;$("#flashTimer").textContent=fmt(total);if(total<=0)stopFlash(true);},1000);
-  flashIv=setInterval(()=>{if(silenceLock)return;$("#flashStage").textContent=chunks[i%chunks.length];i++;
-    if($("#silenceOn").checked)setTimeout(()=>{if(!silenceLock)beginSilence();},spd*0.7);},spd);
-};
-$("#flashStop").onclick=()=>stopFlash(true);
-function stopFlash(log){clearInterval(flashIv);clearInterval(flashCd);if(log){$("#flashStage").textContent="―";$("#flashTimer").textContent="停止";addShun("フラッシュ",$("#flashTime").value,$("#flashSpeed").value+"秒");}}
-
-let wordIv,wordCd;
-$("#wordStart").onclick=()=>{stopWord();
-  let total=Number($("#wordTime").value)*60,spd=Number($("#wordSpeed").value)*1000;$("#wordTimer").textContent=fmt(total);
-  const stage=$("#wordStage");stage.classList.toggle("vertical",$("#wordDir").value==="v");
-  wordCd=setInterval(()=>{total--;$("#wordTimer").textContent=fmt(total);if(total<=0)stopWord(true);},1000);
-  wordIv=setInterval(()=>{if(silenceLock)return;stage.textContent=shuffleChars(WORD_LIST[rand(0,WORD_LIST.length-1)]);},spd);};
-$("#wordStop").onclick=()=>stopWord(true);
-function stopWord(log){clearInterval(wordIv);clearInterval(wordCd);const stage=$("#wordStage");stage.classList.remove("vertical");if(log){stage.textContent="―";$("#wordTimer").textContent="停止";addShun("単語",$("#wordTime").value,$("#wordSpeed").value+"秒");}}
-
-let circleIv,circleCd;
-$("#circleStart").onclick=()=>{stopCircle();
-  let total=Number($("#circleTime").value)*60,spd=Number($("#circleSpeed").value)*1000;$("#circleTimer").textContent=fmt(total);
-  circleCd=setInterval(()=>{total--;$("#circleTimer").textContent=fmt(total);if(total<=0)stopCircle(true);},1000);
-  const f=$("#circleField");
-  circleIv=setInterval(()=>{if(silenceLock)return;f.innerHTML="";
-    const line=[...shuffleChars(WORD_LIST[rand(0,WORD_LIST.length-1)]+WORD_LIST[rand(0,WORD_LIST.length-1)])].slice(0,14);
-    const w=f.clientWidth,h=f.clientHeight,cx=w/2,cy=h/2,r=Math.min(w,h)*0.36;
-    line.forEach((c,i)=>{const a=2*Math.PI*i/line.length;const d=document.createElement("div");d.className="letter";d.textContent=c;
-      d.style.left=(cx+r*Math.cos(a))+"px";d.style.top=(cy+r*Math.sin(a))+"px";f.appendChild(d);});
-    setTimeout(()=>f.innerHTML="",spd*0.8);if($("#silenceOn").checked)setTimeout(()=>{if(!silenceLock)beginSilence();},spd*0.82);},spd);};
-$("#circleStop").onclick=()=>stopCircle(true);
-function stopCircle(log){clearInterval(circleIv);clearInterval(circleCd);if(log){$("#circleField").innerHTML="";$("#circleTimer").textContent="停止";addShun("円形",$("#circleTime").value,$("#circleSpeed").value+"秒");}}
-
-let randIv,randCd;
-$("#randStart").onclick=()=>{stopRand();
-  let total=Number($("#randTime").value)*60,spd=Number($("#randSpeed").value)*1000;$("#randTimer").textContent=fmt(total);
-  randCd=setInterval(()=>{total--;$("#randTimer").textContent=fmt(total);if(total<=0)stopRand(true);},1000);
-  const f=$("#randField");
-  randIv=setInterval(()=>{if(silenceLock)return;f.innerHTML="";
-    const chars=[...(WORD_LIST[rand(0,WORD_LIST.length-1)]+WORD_LIST[rand(0,WORD_LIST.length-1)]+WORD_LIST[rand(0,WORD_LIST.length-1)])].slice(0,16);
-    const w=f.clientWidth,h=f.clientHeight,m=26,placed=[],minD=Math.min(w,h)/Math.max(4,Math.sqrt(chars.length)*1.2);
-    chars.forEach(c=>{let x,y,t=0;do{x=rand(m,w-m);y=rand(m,h-m);t++;}while(t<40&&placed.some(p=>(p.x-x)**2+(p.y-y)**2<minD*minD));placed.push({x,y});
-      const d=document.createElement("div");d.className="letter";d.textContent=c;d.style.left=x+"px";d.style.top=y+"px";f.appendChild(d);});
-    setTimeout(()=>f.innerHTML="",spd*0.8);if($("#silenceOn").checked)setTimeout(()=>{if(!silenceLock)beginSilence();},spd*0.82);},spd);};
-$("#randStop").onclick=()=>stopRand(true);
-function stopRand(log){clearInterval(randIv);clearInterval(randCd);if(log){$("#randField").innerHTML="";$("#randTimer").textContent="停止";addShun("ランダム",$("#randTime").value,$("#randSpeed").value+"秒");}}
-
-/* 観察力 */
-let obsTarget="";
-$("#obsStart").onclick=()=>{
-  const n=Number($("#obsSize").value),sec=Number($("#obsSec").value)*1000;
-  obsTarget=Array.from({length:n*n},()=>rand(0,9)).join("");
-  const stage=$("#obsStage");stage.innerHTML="";const g=document.createElement("div");g.className="grid-num";
-  g.style.gridTemplateColumns=`repeat(${n},auto)`;[...obsTarget].forEach(d=>{const s=document.createElement("span");s.textContent=d;g.appendChild(s);});
-  stage.appendChild(g);$("#obsAnswer").style.display="none";$("#obsResult").innerHTML="";
-  setTimeout(()=>{stage.textContent="🙈 入力してください";$("#obsAnswer").style.display="block";$("#obsInput").value="";$("#obsInput").focus();},sec);
-};
-$("#obsCheck").onclick=()=>{
-  const ans=$("#obsInput").value.replace(/\D/g,"");let hit=0;for(let i=0;i<obsTarget.length;i++)if(ans[i]===obsTarget[i])hit++;
-  const acc=Math.round(hit/obsTarget.length*100);
-  $("#obsResult").innerHTML=`<span class="pill">正解：${obsTarget}</span><span class="pill">一致：${hit}/${obsTarget.length}</span><span class="pill">正答率：${acc}%</span>`;
-  addShun("観察力",0,`${hit}/${obsTarget.length}`);
-};
-
-/* イメージ力（短文・情景イメージ版） */
-let imgTimerId=null;
-function splitToLines(str){
-  // 助詞や区切り後で分割候補を作る
-  const BREAKS=/([はがをにでとのからまでよりもへさえ]|[てっ](?![いう])|[、。])/g;
-  const positions=[];let m;
-  while((m=BREAKS.exec(str))!==null)positions.push(m.index+m[0].length);
-  // 全候補でスライスしてセグメントリスト作成
-  const segs=[];let prev=0;
-  positions.forEach(p=>{if(p>prev)segs.push(str.slice(prev,p));prev=p;});
-  if(prev<str.length)segs.push(str.slice(prev));
-  // セグメントを3〜8字のグループに結合
-  const lines=[];let cur="";
-  segs.forEach(s=>{
-    if(cur.length===0){cur=s;return;}
-    if((cur+s).length<=8){cur+=s;}
-    else{if(cur.length>=3)lines.push(cur);else if(lines.length>0)lines[lines.length-1]+=cur;else lines.push(cur);cur=s;}
-  });
-  if(cur)lines.length>0&&lines[lines.length-1].length+cur.length<=8?lines[lines.length-1]+=cur:lines.push(cur);
-  // 最終調整：3行未満なら再分割、5行超なら結合
-  if(lines.length<2&&str.length>8){
-    const step=Math.ceil(str.length/3);const r=[];
-    for(let i=0;i<str.length;i+=step)r.push(str.slice(i,i+step));
-    return r;
-  }
-  return lines.slice(0,6);
-}
-function renderImgLines(lines,isV){
-  const stage=$("#imgStage");
-  const cls=isV?"img-stage-v":"img-stage-h";
-  stage.innerHTML="";stage.className="stage "+cls;
-  lines.forEach(l=>{const d=document.createElement("div");d.className="img-line";d.textContent=l;stage.appendChild(d);});
-}
-function imgShowSentence(){
-  if(!IMG_SENTENCES.length){$("#imgStage").innerHTML="<span style='color:var(--muted)'>文章リストを読み込み中…ページを再読み込みしてください</span>";return;}
-  const sentence=IMG_SENTENCES[imgIdx%IMG_SENTENCES.length];
-  const lines=splitToLines(sentence);
-  const isV=$("#imgDir").value==="v";
-  renderImgLines(lines,isV);
-  $("#imgAnswer").style.display="none";$("#imgResult").innerHTML="";
-  const sec=Number($("#imgSec").value)*1000;
-  clearTimeout(imgTimerId);
-  imgTimerId=setTimeout(()=>{
-    $("#imgStage").className="stage";
-    $("#imgStage").innerHTML="<span style='color:var(--muted)'>― 映像を頭の中で保ってください ―</span>";
-    $("#imgAnswer").style.display="block";
-  },sec);
-}
-$("#imgStart").onclick=()=>{imgIdx=rand(0,Math.max(0,(IMG_SENTENCES.length||10)-1));imgShowSentence();};
-$("#imgNext").onclick=()=>{clearTimeout(imgTimerId);imgIdx++;imgShowSentence();};
-(()=>{
-  const log=(label)=>()=>{addShun("イメージ力",0,label);$("#imgResult").innerHTML=`<span class="pill">${label}</span>`;$("#imgAnswer").style.display="none";};
-  document.getElementById("imgGood").onclick=log("🌟 鮮明");
-  document.getElementById("imgOk").onclick=log("✓ 見えた");
-  document.getElementById("imgNg").onclick=log("△ ぼんやり");
-})();
-
-/* 瞬読 実力テスト */
-let stLen=3,stCur="";
-function stTitleOf(len){return len>=9?"🚀 一瞬の達人":len>=7?"⚡ 速読上級":len>=5?"📗 速読中級":"🌱 入門";}
-$("#stStart").onclick=()=>{stLen=3;$("#stResult").innerHTML="";$("#stTitle").innerHTML="";stShow();};
-function stShow(){
-  stCur=Array.from({length:stLen},()=>rand(0,9)).join("");
-  $("#stStage").textContent=stCur;$("#stAnswer").style.display="none";
-  setTimeout(()=>{$("#stStage").textContent="🙈";$("#stAnswer").style.display="block";$("#stInput").value="";$("#stInput").focus();},600);
-}
-$("#stCheck").onclick=()=>{
-  const ans=$("#stInput").value.replace(/\D/g,"");
-  if(ans===stCur){$("#stResult").innerHTML=`<span class="pill">${stLen}桁 正解！次へ</span>`;stLen++;setTimeout(stShow,700);}
-  else{
-    const reached=stLen-1;
-    $("#stStage").textContent="終了";$("#stAnswer").style.display="none";
-    $("#stResult").innerHTML=`<span class="pill">正解：${stCur}</span><span class="pill">到達：${reached}桁</span>`;
-    $("#stTitle").innerHTML=`<span class="pill">称号：${stTitleOf(reached)}</span>`;
-    addShun("実力テスト",0,`${reached}桁`);
-  }
-};
 
 /* ============================================================
    記憶法：記録・称号
@@ -1186,17 +661,20 @@ $("#memCsv").addEventListener("click",()=>{const h=getMem();if(!h.length)return 
   const csv="日時,手法,正答率,スコア\n"+h.map(x=>`${x.date},${x.method},${x.acc},${x.score}`).join("\n");
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="memory_history.csv";a.click();});
 
-/* 数字記憶 */
-let numTarget="",numBarIv;
+/* ============================================================
+   数字記憶
+============================================================ */
+let numTarget="",numBarIv,numTimeout;
 function groupDigits(s,g){if(!g)return s;const a=[];for(let i=0;i<s.length;i+=g)a.push(s.slice(i,i+g));return a.join(" ");}
 $("#numStart").onclick=()=>{
+  clearInterval(numBarIv);clearTimeout(numTimeout);
   const len=Number($("#numDigits").value),sec=Number($("#numSec").value),g=Number($("#numGroup").value);
   numTarget=Array.from({length:len},()=>rand(0,9)).join("");
   $("#numStage").textContent=groupDigits(numTarget,g);$("#numStage").style.fontSize=len<=16?"":"1.4rem";
   $("#numAnswer").style.display="none";$("#numResult").innerHTML="";
   let rem=sec;$("#numBar").style.width="100%";clearInterval(numBarIv);
   numBarIv=setInterval(()=>{rem--;$("#numBar").style.width=(rem/sec*100)+"%";if(rem<=0)clearInterval(numBarIv);},1000);
-  setTimeout(()=>{$("#numStage").textContent="🙈 入力してください";$("#numAnswer").style.display="block";$("#numInput").value="";$("#numInput").focus();},sec*1000);
+  numTimeout=setTimeout(()=>{$("#numStage").textContent="🙈 入力してください";$("#numAnswer").style.display="block";$("#numInput").value="";$("#numInput").focus();},sec*1000);
 };
 $("#numCheck").onclick=()=>{
   const ans=$("#numInput").value.replace(/\D/g,"");let hit=0;for(let i=0;i<numTarget.length;i++)if(ans[i]===numTarget[i])hit++;
@@ -1205,21 +683,25 @@ $("#numCheck").onclick=()=>{
   addMem("数字記憶",acc,score);
 };
 
-/* 単語記憶トレーニング */
+/* ============================================================
+   単語記憶トレーニング
+============================================================ */
 let mwTarget=[],mwBarIv;
-function startWordMemory(words,sec,onTimeup){
-  mwTarget=words;$("#mwStage").classList.remove("vertical");
-  $("#mwStage").textContent=mwTarget.join("　");$("#mwAnswer").style.display="none";$("#mwResult").innerHTML="";
-  let rem=sec;$("#mwBar").style.width="100%";clearInterval(mwBarIv);
+function startWordMemory(words,sec){
+  clearInterval(mwBarIv);
+  mwTarget=words;
+  $("#mwStage").textContent=mwTarget.join("　");
+  $("#mwAnswer").style.display="none";$("#mwResult").innerHTML="";
+  let rem=sec;$("#mwBar").style.width="100%";
   mwBarIv=setInterval(()=>{rem--;$("#mwBar").style.width=(rem/sec*100)+"%";if(rem<=0){clearInterval(mwBarIv);
-    $("#mwStage").textContent="🙈 思い出して入力";$("#mwAnswer").style.display="block";$("#mwInput").value="";$("#mwInput").focus();
-    if(onTimeup)onTimeup();}},1000);
+    $("#mwStage").textContent="🙈 思い出して入力";$("#mwAnswer").style.display="block";$("#mwInput").value="";$("#mwInput").focus();}},1000);
 }
 $("#mwStart").onclick=()=>{
   const n=Number($("#mwCount").value),sec=Number($("#mwSec").value);
   startWordMemory(sample(MEM_WORD_LIST,n),sec);
 };
 $("#mwCheck").onclick=()=>{
+  clearInterval(mwBarIv);
   const ans=$("#mwInput").value.split(/[、,\s\n]+/).map(s=>s.trim()).filter(Boolean);
   const hit=mwTarget.filter(w=>ans.includes(w)).length;
   const acc=hit/mwTarget.length*100,score=acc*(mwTarget.length/10);
@@ -1227,7 +709,9 @@ $("#mwCheck").onclick=()=>{
   addMem("単語記憶",acc,score);
 };
 
-/* カード配置記憶（トランプ） */
+/* ============================================================
+   カード配置記憶（トランプ）
+============================================================ */
 const SUITS=[{s:"♠",red:false},{s:"♥",red:true},{s:"♦",red:true},{s:"♣",red:false}];
 const RANKS=["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
 function buildDeck(pairs){
@@ -1237,7 +721,6 @@ function buildDeck(pairs){
   return cards;
 }
 function colsFor(n){return n<=8?4:n<=12?4:n<=16?4:n<=20?5:6;}
-/* 全カードを memoSec 秒表示→伏せる→記憶でペア当て。onComplete(moves) */
 function runConcentration(boardEl,statusEl,barEl,pairs,memoSec,onComplete){
   const deck=buildDeck(pairs);boardEl.style.gridTemplateColumns=`repeat(${colsFor(deck.length)},minmax(46px,64px))`;
   boardEl.innerHTML="";let first=null,lock=true,matched=0,moves=0;const cells=[];
@@ -1263,7 +746,6 @@ function runConcentration(boardEl,statusEl,barEl,pairs,memoSec,onComplete){
   });
   function flip(el,up){el.classList.toggle("up",up);}
   function update(){if(statusEl)statusEl.innerHTML=`<span class="pill">手数：${moves}</span><span class="pill">そろったペア：${matched}/${pairs}</span>`;}
-  // 記憶フェーズ：全部見えている → memoSec後に一斉に伏せる
   if(statusEl)statusEl.innerHTML=`<span class="pill">記憶中… ${memoSec}秒</span>`;
   let rem=memoSec;if(barEl){barEl.style.width="100%";}
   const iv=setInterval(()=>{rem--;if(barEl)barEl.style.width=(rem/memoSec*100)+"%";
@@ -1279,7 +761,9 @@ $("#pairStart").onclick=()=>{
   });
 };
 
-/* ドミニク */
+/* ============================================================
+   ドミニク
+============================================================ */
 const DOM_LETTER=["O","A","B","C","D","E","S","G","H","N"];
 const DOM_KEY="dominic_table";
 const getDom=()=>JSON.parse(localStorage.getItem(DOM_KEY)||"{}");
@@ -1307,7 +791,9 @@ $("#domDrill").onclick=()=>{const t=getDom();const keys=Object.keys(t);if(!keys.
 $("#domDrillCheck").onclick=()=>{if(!domQ)return;const t=getDom();const ok=$("#domDrillInput").value.trim()===t[domQ].person;
   $("#domDrillResult").innerHTML=`<span class="pill">${ok?"⭕ 正解":"❌ 不正解"}</span><span class="pill">答え：${t[domQ].person}（${t[domQ].action}／${t[domQ].object}）</span>`;};
 
-/* 記憶法 実力テスト（数字 / 単語 / 神経衰弱） */
+/* ============================================================
+   記憶法 実力テスト（数字 / 単語 / 神経衰弱）
+============================================================ */
 let mtTarget="",mtWords=[],mtBarIv,mtMode="num";
 function mtTitleNum(hit){return hit>=18?"🚀 神速の記憶王":hit>=14?"⚡ 記憶マスター":hit>=10?"📘 記憶の達人":"🌱 修行中";}
 function mtTitleWord(hit){return hit>=14?"🚀 言葉の達人":hit>=11?"⚡ 記憶マスター":hit>=7?"📘 記憶の達人":"🌱 修行中";}
@@ -1317,7 +803,7 @@ function mtBar(sec,after){let rem=sec;$("#mtBar").style.width="100%";clearInterv
 $("#mtStart").onclick=()=>{
   mtMode=$("#mtType").value;
   $("#mtAnswer").style.display="none";$("#mtResult").innerHTML="";$("#mtTitle").innerHTML="";
-  $("#mtPairBoard").innerHTML="";$("#mtStage").classList.remove("vertical");$("#mtInput").value="";
+  $("#mtPairBoard").innerHTML="";$("#mtInput").value="";
   $("#mtBar").style.width="100%";clearInterval(mtBarIv);
   if(mtMode==="num"){
     mtTarget=Array.from({length:20},()=>rand(0,9)).join("");$("#mtStage").textContent=groupDigits(mtTarget,2);
@@ -1326,7 +812,7 @@ $("#mtStart").onclick=()=>{
   }else if(mtMode==="word"){
     mtWords=sample(MEM_WORD_LIST,15);$("#mtStage").textContent=mtWords.join("　");$("#mtInput").removeAttribute("inputmode");
     mtBar(40,()=>{$("#mtStage").textContent="🙈 思い出して入力";$("#mtLabel").textContent="覚えた単語を改行か読点区切りで入力";$("#mtAnswer").style.display="block";$("#mtInput").focus();});
-  }else{ // pair
+  }else{
     $("#mtStage").textContent="配置を覚えてください（8ペア・6秒）";
     runConcentration($("#mtPairBoard"),$("#mtResult"),$("#mtBar"),8,6,moves=>{
       const acc=Math.round(8/moves*100);
@@ -1354,98 +840,13 @@ $("#mtCheck").onclick=()=>{
 };
 
 /* 初期描画 */
-renderDomGrid();drawShunChart();drawMemChart();renderMemTitles();
-
-/* ============================================================
-   速読テスト
-============================================================ */
-(function(){
-  let rtStart=0,rtTimerIv=null,rtTextContent="",rtCurrentItem=null;
-  function startTimer(){
-    rtStart=Date.now();
-    rtTimerIv=setInterval(()=>{
-      const elapsed=Math.floor((Date.now()-rtStart)/1000);
-      $("#rtTimer").textContent=fmt(elapsed);
-    },1000);
-  }
-  function stopTimer(){clearInterval(rtTimerIv);rtTimerIv=null;}
-
-  $("#rtStart").onclick=async()=>{
-    const id=$("#rtSelect").value;
-    if(!id)return alert("テキストを選んでください");
-    rtCurrentItem=textManifest.find(it=>it.id===id);
-    if(!rtCurrentItem)return alert("テキスト情報が見つかりません");
-    try{
-      $("#rtResult").innerHTML="<span class='pill'>読み込み中…</span>";
-      const r=await fetch("./"+rtCurrentItem.file);
-      if(!r.ok)throw new Error();
-      rtTextContent=await r.text();
-    }catch(e){
-      $("#rtResult").innerHTML="<span class='pill'>テキストの取得に失敗しました</span>";return;
-    }
-    $("#rtResult").innerHTML="";
-    $("#rtText").textContent=rtTextContent;
-    $("#rtReading").style.display="block";
-    $("#rtQuiz").style.display="none";
-    $("#rtTimer").textContent="0:00";
-    startTimer();
-    window.scrollTo({top:0,behavior:"smooth"});
-  };
-
-  $("#rtDone").onclick=()=>{
-    stopTimer();
-    const elapsed=(Date.now()-rtStart)/1000;
-    const charCount=rtTextContent.replace(/\s/g,"").length;
-    const cpm=Math.round(charCount/(elapsed/60));
-    $("#rtReading").style.display="none";
-    // 設問生成
-    const qs=rtCurrentItem.questions||[];
-    if(!qs.length){
-      addShun("速読テスト",Math.round(elapsed/60),cpm+"字/分");
-      $("#rtResult").innerHTML=`<span class="pill">読書速度：${cpm}字/分</span><span class="pill">所要時間：${fmt(Math.round(elapsed))}</span>`;
-      return;
-    }
-    const qhtml=qs.map((q,i)=>`
-      <div style="margin:.8rem 0;padding:.8rem;background:var(--surface);border:1px solid var(--line);border-radius:10px">
-        <p style="font-weight:700;margin:0 0 .4rem">Q${i+1}. ${q.q}</p>
-        ${q.choices.map((c,j)=>`<label style="display:block;padding:.3rem .2rem;cursor:pointer">
-          <input type="radio" name="rtq${i}" value="${j}" style="margin-right:.4rem">${c}</label>`).join("")}
-      </div>`).join("");
-    $("#rtQList").innerHTML=qhtml;
-    $("#rtQuiz").style.display="block";
-    window.scrollTo({top:0,behavior:"smooth"});
-    $("#rtStart").dataset.elapsed=elapsed;
-    $("#rtStart").dataset.cpm=cpm;
-  };
-
-  $("#rtScore").onclick=()=>{
-    const qs=rtCurrentItem.questions||[];
-    const elapsed=Number($("#rtStart").dataset.elapsed)||0;
-    const cpm=Number($("#rtStart").dataset.cpm)||0;
-    let correct=0;
-    qs.forEach((q,i)=>{
-      const sel=document.querySelector(`input[name="rtq${i}"]:checked`);
-      if(sel&&Number(sel.value)===q.answer)correct++;
-    });
-    const acc=Math.round(correct/qs.length*100);
-    const score=Math.round(cpm*acc/100);
-    const level=cpm>=3000?"🚀 超速読レベル":cpm>=2000?"⚡ 速読レベル":cpm>=1200?"📗 準速読":cpm>=700?"📖 平均的な黙読":"🌱 音声化あり";
-    $("#rtQuiz").style.display="none";
-    $("#rtResult").innerHTML=`
-      <span class="pill">読書速度：${cpm}字/分</span>
-      <span class="pill">理解度：${correct}/${qs.length}問（${acc}%）</span>
-      <span class="pill">総合評価：${level}</span>
-      <span class="pill" style="font-size:.8rem;color:var(--muted)">参考：平均黙読500〜800字/分</span>`;
-    addShun("速読テスト",Math.round(elapsed/60),`${cpm}字/分 理解${acc}%`);
-  };
-})();
+renderDomGrid();drawMemChart();renderMemTitles();
 
 /* ============================================================
    記憶力レベルテスト
 ============================================================ */
 (function(){
   let mlPhase=0,mlSpanReached=0,mlSpanCur="",mlWordTarget=[],mlWordBarIv,mlSpatialMarks=[],mlSpatialSelected=[];
-  const TOTAL_PHASES=3;
 
   function setPhase(n){
     mlPhase=n;
@@ -1462,12 +863,13 @@ renderDomGrid();drawShunChart();drawMemChart();renderMemTitles();
   $("#mlStart").onclick=()=>{
     $("#mlStart-area").style.display="none";
     $("#mlPhase").style.display="block";
+    $("#mlFinalResult").style.display="none";
     mlSpanReached=0;
     setPhase(1);
     startSpan(3);
   };
 
-  // Phase1: 数字スパン
+  /* Phase1: 数字スパン */
   let mlSpanLen=3;
   function startSpan(len){
     mlSpanLen=len;
@@ -1497,7 +899,7 @@ renderDomGrid();drawShunChart();drawMemChart();renderMemTitles();
     }
   };
 
-  // Phase2: 単語再生
+  /* Phase2: 単語再生 */
   function startWordPhase(){
     const words=sample(MEM_WORD_LIST,15);
     mlWordTarget=words;
@@ -1523,12 +925,11 @@ renderDomGrid();drawShunChart();drawMemChart();renderMemTitles();
     setTimeout(()=>showNextBtn(),600);
   };
 
-  // Phase3: 空間記憶
+  /* Phase3: 空間記憶 */
   function buildSpatialGrid(){
     const grid=$("#mlSpatialGrid");grid.innerHTML="";
     mlSpatialMarks=[];mlSpatialSelected=[];
     const cells=Array.from({length:16},(_,i)=>i);
-    // 8マーク選択
     const markedIdx=sample(cells,8).map(c=>c);
     mlSpatialMarks=markedIdx;
     for(let i=0;i<16;i++){
@@ -1538,7 +939,7 @@ renderDomGrid();drawShunChart();drawMemChart();renderMemTitles();
       cell.dataset.idx=i;
       grid.appendChild(cell);
     }
-    // 10秒後に全非表示 → 回答モード
+    $("#mlSpatialConfirm").style.display="none";
     setTimeout(()=>{
       grid.querySelectorAll(".spatial-cell").forEach(c=>{c.classList.remove("marked");c.textContent="";});
       grid.querySelectorAll(".spatial-cell").forEach(c=>{
@@ -1597,8 +998,7 @@ renderDomGrid();drawShunChart();drawMemChart();renderMemTitles();
     $("#mlTotalScore").textContent=`総合スコア：${total}点 / 100点`;
     $("#mlRank").textContent=rank;
     $("#mlComment").textContent=comment;
-    const acc=Math.round(total);
-    addMem("記憶力レベルテスト",acc,total);
+    addMem("記憶力レベルテスト",Math.round(total),total);
   }
 
   $("#mlRetry").onclick=()=>{
@@ -1616,6 +1016,5 @@ if ("serviceWorker" in navigator) {
       .catch(err => console.warn("SW registration failed:", err))
   );
 }
-</script>
-</body>
+</script></body>
 </html>
