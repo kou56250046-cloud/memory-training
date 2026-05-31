@@ -1,19 +1,11 @@
-const CACHE = "shundoku-v1";
+const CACHE = "memory-v2";
 
 const PRECACHE = [
   "./training-prototype.html",
   "./manifest.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
-  "./texts/index.json",
-  "./texts/flash/gokan.txt",
-  "./texts/flash/kioku-gijutsu.txt",
-  "./texts/flash/shunkan-chikaku.txt",
-  "./texts/flash/shuukan-no-chikara.txt",
-  "./texts/flash/chishiki-no-tobira.txt",
-  "./texts/word-list.txt",
-  "./texts/memory-word-list.txt",
-  "./texts/image-sentences.txt"
+  "./texts/memory-word-list.txt"
 ];
 
 // インストール時：全ローカルリソースをプリキャッシュ
@@ -36,12 +28,13 @@ self.addEventListener("activate", e =>
   )
 );
 
-// フェッチ：CDNはネットワーク優先、ローカルはキャッシュファースト
+// フェッチ：CDNはネットワーク優先、HTMLはネットワーク優先（更新を確実に反映）、その他はキャッシュファースト
 self.addEventListener("fetch", e => {
   const url = e.request.url;
   const isCDN = url.includes("cdn.jsdelivr") || url.includes("fonts.googleapis") || url.includes("fonts.gstatic");
+  const isHTML = e.request.destination === "document" || url.endsWith(".html");
 
-  if (isCDN) {
+  if (isCDN || isHTML) {
     e.respondWith(
       fetch(e.request)
         .then(r => {
