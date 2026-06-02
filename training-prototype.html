@@ -187,6 +187,32 @@ canvas{margin-top:1rem;max-height:300px;}
 .dom-cell.sel{outline:2px solid var(--ink);}
 @media(max-width:620px){.dom-grid{grid-template-columns:repeat(10,1fr);}.dom-cell{font-size:.55rem;}}
 
+/* ===== 00〜99 語呂合わせ参照表 ===== */
+.yorozu-digit-row{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:1rem 0;}
+.yorozu-digit-cell{background:var(--surface);border:1px solid var(--line);border-radius:10px;
+  padding:.6rem .3rem;text-align:center;transition:.18s;}
+.yorozu-digit-cell:hover{border-color:var(--accent);}
+.yorozu-digit-cell .y-emoji{font-size:1.5rem;display:block;}
+.yorozu-digit-cell .y-num{font-weight:900;font-size:1rem;color:var(--accent-d);display:block;}
+.yorozu-digit-cell .y-word{display:block;font-size:.65rem;color:var(--muted);margin-top:.15rem;line-height:1.3;}
+.yorozu-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin-top:1rem;}
+.yorozu-cell{background:var(--surface);border:1px solid var(--line);border-radius:8px;
+  padding:.4rem .2rem;text-align:center;cursor:pointer;transition:.18s;}
+.yorozu-cell:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface));transform:translateY(-2px);}
+.yorozu-cell .y-emoji{font-size:1.1rem;display:block;}
+.yorozu-cell .y-num{font-weight:900;font-size:.72rem;color:var(--muted);display:block;}
+.yorozu-cell .y-word{display:block;font-size:.6rem;color:var(--accent-d);font-weight:700;margin-top:.1rem;line-height:1.3;}
+@media(max-width:620px){.yorozu-grid{grid-template-columns:repeat(5,1fr);}.yorozu-digit-row{grid-template-columns:repeat(5,1fr);}}
+.yorozu-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:200;
+  align-items:center;justify-content:center;padding:1rem;}
+.yorozu-overlay.show{display:flex;}
+.yorozu-popup{background:var(--surface);border-radius:var(--radius);padding:1.8rem 1.6rem;
+  max-width:340px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.28);text-align:center;}
+.yorozu-popup .yp-emoji{font-size:3.2rem;display:block;margin-bottom:.5rem;}
+.yorozu-popup .yp-num{font-weight:900;font-size:1.7rem;color:var(--accent-d);}
+.yorozu-popup .yp-word{font-size:1.3rem;font-weight:700;margin:.4rem 0 .2rem;}
+.yorozu-popup .yp-hint{font-size:.9rem;color:var(--muted);line-height:1.8;margin-top:.6rem;text-align:left;}
+
 .footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:2rem;}
 
 /* 神経衰弱 */
@@ -290,6 +316,7 @@ canvas{margin-top:1rem;max-height:300px;}
       <div class="menu-card" data-open="me-test"><span class="ic">🏁</span><h4>実力テスト</h4><p>3種目で称号判定</p><span class="arrow">→</span></div>
       <div class="menu-card" data-open="me-memory-level"><span class="ic">🧪</span><h4>記憶力レベルテスト</h4><p>世界基準と比較</p><span class="arrow">→</span></div>
       <div class="menu-card" data-open="me-log"><span class="ic">📊</span><h4>記録</h4><p>称号・スコア推移</p><span class="arrow">→</span></div>
+      <div class="menu-card" data-open="me-yorozu"><span class="ic">🔢</span><h4>00〜99 語呂表</h4><p>形と語呂で数字を絵にする</p><span class="arrow">→</span></div>
     </div>
   </div>
 
@@ -581,6 +608,36 @@ canvas{margin-top:1rem;max-height:300px;}
     </div>
   </div>
 
+  <!-- 00〜99 語呂合わせ参照表 -->
+  <div class="detail" id="me-yorozu" data-detail-group="mem">
+    <div class="backbar"><button class="back-btn" data-back="mem">← 一覧へ</button><span class="detail-title">🔢 00〜99 語呂合わせ一覧</span></div>
+    <div class="card">
+      <span class="tag" style="--accent:var(--terra);--accent-d:var(--terra-d)">日本式 語呂合わせ</span>
+      <h3>🔢 数字を絵に変える語呂合わせ</h3>
+      <div class="why"><b>使い方：</b>各桁の数字に読みを割り当て、2桁を組み合わせて単語・場面に変換します。マスをタップすると覚え方ヒントが表示されます。数字ごとのイメージを目をつぶってすぐ浮かべられるようになれば、長い数字列も"映像の連鎖"として記憶できます。</div>
+      <p class="lead" style="margin-top:.8rem">まず1桁の形イメージを覚えましょう。数字の形を身近な物体に見立てることで、視覚的な記憶の入口を作ります。</p>
+      <div class="yorozu-digit-row" id="yorozuDigitRow"></div>
+    </div>
+    <div class="card">
+      <h3>📋 00〜99 語呂合わせ一覧</h3>
+      <p class="lead">マスをタップすると覚え方のヒントが表示されます。</p>
+      <div class="yorozu-grid" id="yorozuGrid"></div>
+    </div>
+  </div>
+
+  <!-- yorozu popup -->
+  <div class="yorozu-overlay" id="yorozuOverlay" onclick="closeYorozuOverlay(event)">
+    <div class="yorozu-popup">
+      <span class="yp-emoji" id="ypEmoji"></span>
+      <div class="yp-num" id="ypNum"></div>
+      <div class="yp-word" id="ypWord"></div>
+      <div class="yp-hint" id="ypHint"></div>
+      <div class="btn-row" style="justify-content:center;margin-top:1.2rem">
+        <button class="btn ghost" style="--accent:var(--terra);--accent-d:var(--terra-d)" onclick="document.getElementById('yorozuOverlay').classList.remove('show')">閉じる</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 記録 -->
   <div class="detail" id="me-log" data-detail-group="mem">
     <div class="backbar"><button class="back-btn" data-back="mem">← 一覧へ</button><span class="detail-title">📊 記録</span></div>
@@ -652,6 +709,7 @@ function openDetail(id){
   el.classList.add("show");
   if(id==="me-log"){drawMemChart();renderMemTitles();}
   if(id==="me-dom")renderDomGrid();
+  if(id==="me-yorozu"){renderYorozuDigit();renderYorozuGrid();}
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function backToMenu(grp){
@@ -874,6 +932,152 @@ $("#mtCheck").onclick=()=>{
     addMem("実力テスト(単語)",acc,hit*40);
   }
 };
+
+/* ============================================================
+   00〜99 語呂合わせ参照表
+============================================================ */
+const YOROZU_DIGIT=[
+  ["0","⭕","輪・丸",    "ドーナツや車のタイヤ。ゼロの形そのもの。"],
+  ["1","🕯️","ロウソク",  "1本の細い棒。炎が1本立っている形。"],
+  ["2","🦢","白鳥",      "S字に首を曲げた白鳥の優雅なシルエット。"],
+  ["3","👂","耳",        "横向きにした耳の形。3のくぼみが耳のくぼみ。"],
+  ["4","⛵","帆船",      "三角の帆を立てたヨット。4の筆記体の形。"],
+  ["5","🪝","フック",    "先が曲がったフック。さつま芋のような形。"],
+  ["6","🍒","さくらんぼ","茎つきの丸い実。上が細く下が重い。"],
+  ["7","🏌️","ゴルフ",    "斜めに払った7の形。クラブを振り抜く姿。"],
+  ["8","⛄","雪だるま",  "上下の丸が重なった雪だるま。まさに8の形。"],
+  ["9","🎈","風船",      "上に膨らんだ風船と細い糸。9の筆記体。"],
+];
+
+const YOROZU=[
+  ["00","👑","王様",         "お+お → 大きな王様が玉座にどっしり座る"],
+  ["01","🍱","お稲荷さん",   "お+い → お稲荷さん(おいなりさん)の甘い揚げ豆腐がずらり並ぶ"],
+  ["02","👹","鬼",           "お+に → 怖い鬼(おに)が赤い棍棒を振り回す"],
+  ["03","🍶","お酒",         "お+さ → お酒(おさけ)の徳利をほろ酔いで傾ける"],
+  ["04","🍣","お寿司",       "お+し → お寿司(おすし)屋で職人が一貫握る"],
+  ["05","🧱","レゴ",         "れ+ご → カラフルなレゴブロックを黙々と積み上げてお城を作る"],
+  ["06","🍼","おむつ",       "お+む → おむつを替えるお母さんの手際よさ"],
+  ["07","👩","女性",         "お+な → おんなの人が颯爽と歩いてくる"],
+  ["08","🌸","お花",         "お+は → お花見でお花(おはな)を愛でる"],
+  ["09","🫛","オクラ",       "お+く → オクラ(おくら)のネバネバをお皿に盛り付ける"],
+  ["10","🦷","入れ歯",       "い+れ → 入れ歯(いれは)がコップの水にぽとりと落ちる"],
+  ["11","🐶","犬",           "わん+わん → わんわん吠える犬(いぬ)が嬉しそうに飛びついてくる"],
+  ["12","🫁","皮膚",         "ひ+ふ → 皮膚(ひふ)にしっとり保湿クリームを塗る"],
+  ["13","🔪","ジェイソン",   "い+さ → ジェイソンが森の中をずんずん歩いてくる恐怖"],
+  ["14","🪨","石",           "い+し → 重い石(いし)を両手で持ち上げようとする"],
+  ["15","♟️","囲碁",         "い+ご → 囲碁(いご)の対局で黒石を静かに盤に打つ"],
+  ["16","🦸","ヒーロー",     "ひ+ろ → 色鮮やかな衣装のヒーローが颯爽と現れる"],
+  ["17","🐣","ひなどり",     "ひ+な → ひなどりがやわらかな産毛をふわふわさせてよちよち歩く"],
+  ["18","😣","嫌",           "い+や → 嫌(いや)なことを断固とした顔で断る"],
+  ["19","🧘","一休さん",     "い+く → 一休(いっきゅう)さんがとんちで難問をすっきり解く"],
+  ["20","🎁","プレゼント",   "に+お → プレゼントの包みをわくわくしながら開ける"],
+  ["21","🏈","アイシールド21","に+い → アイシールド21の主人公がフィールドを全力で駆け抜ける"],
+  ["22","🧳","荷物",         "に+に → 荷(に)が重い！と大きな荷物を担いでよろける"],
+  ["23","🚃","踏切",         "に+さ → 踏切の警報がカンカン鳴り遮断機がゆっくり降りる"],
+  ["24","🌈","虹",           "に+し → 雨上がりの空に虹が七色にかかる"],
+  ["25","😊","ニコニコマーク","に+こ → ニコニコ笑顔のマークがひょっこり現れる"],
+  ["26","🛁","風呂",         "ふ+ろ → 熱い風呂(ふろ)にゆっくり浸かって一息つく"],
+  ["27","🐟","ツナ缶",       "に+な → ツナ缶のプルタブをぱかっと開ける"],
+  ["28","👦","ニヤ",         "に+や → ニヤ(デスノート)が薄笑いを浮かべてPCを操作する"],
+  ["29","🥩","肉",           "に+く → ジューシーな肉(にく)が焼けるいい匂い"],
+  ["30","🐟","サンマ",       "さ+お → 秋刀魚(さんま)を七輪で香ばしく焼く"],
+  ["31","🦏","サイ",         "さ+い → サイ(犀)が鋭い角を振って突進してくる"],
+  ["32","☀️","太陽",         "さ+に → 太陽(サニー)がぐんぐん輝いて大地を温める"],
+  ["33","🎋","笹",           "さ+さ → 笹(ささ)の葉に短冊を吊るす七夕の夜"],
+  ["34","🍣","刺身",         "さ+し → 新鮮な刺身(さしみ)をぷりぷりと口に運ぶ"],
+  ["35","🪸","珊瑚",         "さ+ご → 珊瑚(さんご)礁を熱帯魚がすいすい泳ぐ"],
+  ["36","⚔️","侍",           "さ+む → 侍(さむらい)が刀をすらりと抜いて正眼に構える"],
+  ["37","🦋","さなぎ",       "さ+な → サナギ(さなぎ)が蝶に変身する瞬間"],
+  ["38","🐟","鯖",           "さ+ば → 塩焼きの鯖(さば)が熱々で焼き上がる"],
+  ["39","🌸","桜",           "さ+く → 桜(さくら)の花びらがはらはらと舞い散る"],
+  ["40","🦓","シマウマ",     "し+お → シマウマが草原をのんびり歩くモノクロの縞模様"],
+  ["41","🎢","シーソー",     "し+い → シーソーに乗ってぎっこんばったん楽しむ"],
+  ["42","💀","死神",         "し+に → 死神(しにがみ)が大きな鎌を持って静かに立っている"],
+  ["43","🔍","シミ",         "し+み → 白いシャツについたシミ(しみ)を一生懸命こすって落とす"],
+  ["44","🦁","獅子",         "し+し → 獅子(しし)が大きなたてがみをゆったり揺らす"],
+  ["45","🚦","信号",         "し+ご → 信号(しんごう)が赤から青に変わるのをじっと待つ"],
+  ["46","🤝","白バイク",     "し+ろ → 白いバイク（警官）が追いかけてきている"],
+  ["47","🍂","シナモン",     "し+な → シナモン(しなもん)の甘い香りがラテから漂ってくる"],
+  ["48","🌿","芝",           "し+ば → 青々とした芝(しば)生の上でごろんと寝転ぶ"],
+  ["49","🛁","浴槽",         "よ+く → 浴槽(よくそう)にお湯をたっぷり張ってどぼんと入る"],
+  ["50","🧊","氷",           "こ+お → 氷(こおり)の上をつるっと滑って転ぶ"],
+  ["51","☕","コーヒー",     "こ+い → コーヒーの香りで目が覚める朝"],
+  ["52","⛰️","古墳",         "こ+ふ → 古墳(こふん)の丸い土盛りが朝もやに浮かぶ"],
+  ["53","🗑️","ゴミ",         "ご+み → ゴミ(ごみ)袋をぎゅっと縛って捨てに行く"],
+  ["54","🧍","腰",           "こ+し → 腰(こし)に手を当てて背筋をぐいっと伸ばす"],
+  ["55","🍵","午後の紅茶",   "ご+ご → 午後(ごご)のくつろぎタイムに紅茶を一杯"],
+  ["56","🧤","ゴム",         "ご+む → ゴム(ごむ)手袋をはめて洗い物をする"],
+  ["57","🌾","粉",           "こ+な → 粉(こな)まみれのパン職人が生地をこねる"],
+  ["58","🥬","ゴーヤ",       "ご+は → ゴーヤチャンプルーの苦みがクセになる"],
+  ["59","🐉","悟空",         "ご+く → 悟空(ごくう)が超サイヤ人に変身して気を解放する"],
+  ["60","🐑","羊の群れ",     "ろ+お → 羊の群れがのどかな草原をゆっくり移動する"],
+  ["61","🍽️","ロイヤルホスト","ろ+い → ロイヤルホストのファミレスで落ち着いた食事を楽しむ"],
+  ["62","👶","ムーニーマン", "む+に → ムーニーマンのパッケージの赤ちゃんがニコニコ笑う"],
+  ["63","🍜","武蔵屋",       "む+さ → 武蔵屋の家系ラーメンを豪快にずるずるすする"],
+  ["64","🐛","虫",           "む+し → 虫(むし)が葉っぱの裏にひっそり隠れている"],
+  ["65","🎨","ロゴ",         "ろ+ご → 鮮やかなロゴ(ろご)がブランドを印象づける"],
+  ["66","👻","ろくろ首",     "ろ+ろ → ろくろ首(ろくろくび)がにゅーっと首を伸ばして覗き込む"],
+  ["67","🧔","胸毛",         "む+な → 胸(むな)いっぱいに生えた胸毛をかき分ける"],
+  ["68","👵","老婆",         "む+や → 老婆(ろうば)がおばあちゃんの知恵袋をぽつりぽつり語る"],
+  ["69","🎸","ロックバンド", "む+く → ロックバンドがステージで激しく演奏する"],
+  ["70","🍺","生ビール",     "な+お → 生ビール(なまびーる)のジョッキをごくごく飲む"],
+  ["71","🔪","ナイフ",       "な+い → ナイフがきらりと光って食材をすっと切る"],
+  ["72","🍊","夏みかん",     "な+に → 夏みかん(なつみかん)をむいてすっぱいのをほおばる"],
+  ["73","🚀","NASA",         "な+さ → NASAのロケットが轟音で空へ飛び立つ"],
+  ["74","🍐","梨",           "な+し → みずみずしい梨(なし)をがぶっとかじる"],
+  ["75","🌴","南国",         "な+ご → 南国(なんごく)のビーチでヤシの木が風に揺れる"],
+  ["76","🙏","南無",         "な+む → 手を合わせて南無(なむ)と静かに唱える"],
+  ["77","🎋","七夕",         "な+な → 七夕(たなばた)の夜に星を一つずつ数える"],
+  ["78","🥋","ナッパ",       "な+や → ナッパ(ドラゴンボール)が戦闘服で構えて戦いに挑む"],
+  ["79","😭","泣く",         "な+く → 感動映画を見て思わず泣く(なく)"],
+  ["80","🚬","葉巻",         "は+お → 葉巻(はまき)をゆったりくわえて煙をゆっくり吐く"],
+  ["81","👠","ハイヒール",   "は+い → ハイヒールのカツカツという音が廊下に響く"],
+  ["82","🏺","埴輪",         "は+に → 埴輪(はにわ)がぽかんとした顔で並んでいる"],
+  ["83","✂️","はさみ",       "は+さ → はさみ(はさみ)でリボンをじょきじょき切る"],
+  ["84","🌉","橋",           "は+し → 橋(はし)の上から川の流れを見下ろす"],
+  ["85","👘","羽衣",         "は+ご → 天女の羽衣(はごろも)がふわりと風になびく"],
+  ["86","🥩","ハム",         "は+む → 薄切りハム(はむ)をお皿に綺麗に並べる"],
+  ["87","🌸","花",           "は+な → 満開の花(はな)が風にほろほろ散る"],
+  ["88","🍃","葉っぱ",       "は+は → 葉っぱ(はっぱ)がはらはらと秋風に散る"],
+  ["89","💊","薬",           "や+く → 薬(やく)をコップの水でごくんと飲み込む"],
+  ["90","🐻","熊",           "く+わ → 熊(くま)が川でさっと鮭をつかみ取る"],
+  ["91","🥝","キウイ",       "く+い → キウイ(きうい)を半分に切ってスプーンですくって食べる"],
+  ["92","👟","靴",           "く+に → 靴(くつ)の紐をしっかり結んで走り出す"],
+  ["93","🍬","グミ",         "く+さ → グミをプニプニかみながら甘酸っぱさに顔をしかめる"],
+  ["94","🍢","串",           "く+し → 串(くし)にさした団子を一口がぶっとかじる"],
+  ["95","🌱","球根",         "き+ご → 球根(きゅうこん)を土に埋めて春の芽吹きを待つ"],
+  ["96","🐱","クロネコ",     "く+も → クロネコが黒い毛並みを光らせてすたすた歩く"],
+  ["97","🍡","きな粉",       "き+な → きな粉(きなこ)をたっぷりまぶした柔らかい餅"],
+  ["98","🐙","タコ",         "く+や → タコが吸盤でがっちりとくっついて離れない"],
+  ["99","🚑","救急車",       "く+く → 救急車(きゅうきゅうしゃ)がサイレンを鳴らして駆けつける"],
+];
+
+function renderYorozuDigit(){
+  const row=$("#yorozuDigitRow");if(!row)return;
+  row.innerHTML=YOROZU_DIGIT.map(([n,e,w])=>
+    `<div class="yorozu-digit-cell"><span class="y-emoji">${e}</span><span class="y-num">${n}</span><span class="y-word">${w}</span></div>`
+  ).join("");
+}
+
+function renderYorozuGrid(){
+  const g=$("#yorozuGrid");if(!g)return;
+  g.innerHTML=YOROZU.map(([no,e,w],i)=>
+    `<div class="yorozu-cell" onclick="showYorozu(${i})"><span class="y-emoji">${e}</span><span class="y-num">${no}</span><span class="y-word">${w}</span></div>`
+  ).join("");
+}
+
+function showYorozu(i){
+  const [no,e,w,h]=YOROZU[i];
+  $("#ypEmoji").textContent=e;
+  $("#ypNum").textContent=no;
+  $("#ypWord").textContent=w;
+  $("#ypHint").textContent=h;
+  $("#yorozuOverlay").classList.add("show");
+}
+
+function closeYorozuOverlay(ev){
+  if(ev.target===$("#yorozuOverlay"))$("#yorozuOverlay").classList.remove("show");
+}
 
 /* 初期描画 */
 renderDomGrid();drawMemChart();renderMemTitles();
