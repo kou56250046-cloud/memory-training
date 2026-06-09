@@ -1023,6 +1023,7 @@ function openDetail(id){
   if(id==="me-session")renderSessionList();
   if(id==="me-random")renderGachaList();
   window.scrollTo({top:0,behavior:"smooth"});
+  bgmAutoStart();
 }
 function backToMenu(grp){
   $$(`.detail[data-detail-group="${grp}"]`).forEach(d=>d.classList.remove("show"));
@@ -1770,6 +1771,12 @@ function bgmToggle(){
     const slot=bgmCurrentSlot>=0?bgmCurrentSlot:(bgmAudios[0]?0:bgmAudios[1]?1:-1);
     if(slot>=0)bgmPlay(slot);
   }
+}
+
+function bgmAutoStart(){
+  if(bgmIsPlaying)return;
+  const slot=bgmCurrentSlot>=0?bgmCurrentSlot:(bgmAudios[0]?0:bgmAudios[1]?1:-1);
+  if(slot>=0)bgmPlay(slot);
 }
 
 function bgmNext(){
