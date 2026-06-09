@@ -304,6 +304,34 @@ canvas{margin-top:1rem;max-height:300px;}
 .filter-row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.6rem .8rem;background:color-mix(in srgb,var(--accent) 4%,var(--surface));border:1px solid var(--line);border-radius:10px;}
 .filter-row label{font-size:.82rem;font-weight:700;color:var(--muted);margin:0;}
 .filter-row select{padding:.3rem .55rem;font-size:.85rem;width:auto;}
+
+/* ===== [NEW] BGM プレイヤーバー ===== */
+.bgm-bar{position:fixed;bottom:0;left:0;right:0;z-index:45;
+  background:rgba(32,30,27,.94);backdrop-filter:blur(12px);
+  color:#ede9e1;padding:.5rem 1rem;
+  display:flex;align-items:center;gap:.6rem;border-top:1px solid rgba(255,255,255,.1);}
+.bgm-info{flex:1;min-width:0;overflow:hidden;}
+.bgm-bar-title{font-size:.82rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
+.bgm-bar-sub{font-size:.68rem;color:rgba(255,255,255,.42);display:block;}
+.bgm-btn{border:none;background:rgba(255,255,255,.13);cursor:pointer;font-size:.88rem;
+  padding:.32rem .52rem;border-radius:6px;color:#ede9e1;transition:.15s;line-height:1;flex-shrink:0;}
+.bgm-btn:hover{background:rgba(255,255,255,.24);}
+.bgm-btn.playing{background:var(--terra);}
+.bgm-bar-vol{width:55px;accent-color:var(--terra);vertical-align:middle;}
+.bgm-bar-vol-lbl{font-size:.7rem;color:rgba(255,255,255,.45);min-width:2.4rem;text-align:right;}
+
+/* ===== [NEW] 設定ページ ===== */
+.bgm-slot{display:flex;align-items:center;gap:.7rem;padding:.85rem 1rem;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:.6rem;
+  transition:.2s;}
+.bgm-slot.loaded{border-color:var(--terra);background:color-mix(in srgb,var(--terra) 5%,var(--surface));}
+.bgm-slot-icon{font-size:1.4rem;flex-shrink:0;}
+.bgm-slot-info{flex:1;min-width:0;}
+.bgm-slot-name{font-weight:700;font-size:.95rem;}
+.bgm-slot-status{font-size:.78rem;color:var(--muted);margin-top:.1rem;}
+.bgm-slot-status.ok{color:var(--terra-d);font-weight:700;}
+.settings-toggle{display:flex;align-items:center;gap:.4rem;cursor:pointer;font-weight:400;color:var(--ink);}
+.settings-toggle input[type=checkbox]{accent-color:var(--terra);width:1rem;height:1rem;}
 </style>
 </head>
 <body>
@@ -314,6 +342,7 @@ canvas{margin-top:1rem;max-height:300px;}
     <nav class="tabs" data-group="main">
       <button class="nav-tab active" data-target="m-home">ホーム</button>
       <button class="nav-tab" data-target="m-mem">記憶法</button>
+      <button class="nav-tab" data-target="m-settings">⚙ 設定</button>
     </nav>
   </div>
 </header>
@@ -855,6 +884,69 @@ canvas{margin-top:1rem;max-height:300px;}
 </section>
 
 
+<!-- ============ 設定 ============ -->
+<section class="main-section" id="m-settings" data-pane-group="main">
+  <div class="hero">
+    <div class="eyebrow">Settings</div>
+    <h1>設定</h1>
+    <p>BGMや通知など各種設定を管理します。</p>
+  </div>
+
+  <!-- BGM設定 -->
+  <div class="card">
+    <h3>🎵 BGM設定</h3>
+    <div class="why"><b>トレーニング中に流すBGM</b>をここで管理します。ファイルを読み込んで、画面下のプレイヤーバーで操作してください。ページを再読み込みすると再選択が必要です。</div>
+
+    <div class="bgm-slot" id="bgmSlot0">
+      <div class="bgm-slot-icon">🎵</div>
+      <div class="bgm-slot-info">
+        <div class="bgm-slot-name">432Hz</div>
+        <div class="bgm-slot-status" id="bgmStatus0">ファイルが読み込まれていません</div>
+      </div>
+      <label class="btn ghost" style="--accent:var(--terra);--accent-d:var(--terra-d);cursor:pointer;white-space:nowrap;flex-shrink:0">
+        読み込む<input type="file" id="bgmFile0" accept="audio/*" style="display:none">
+      </label>
+      <button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d);padding:.5rem .75rem;flex-shrink:0" id="bgmPlay0" disabled>▶</button>
+    </div>
+
+    <div class="bgm-slot" id="bgmSlot1">
+      <div class="bgm-slot-icon">🎵</div>
+      <div class="bgm-slot-info">
+        <div class="bgm-slot-name">528Hz</div>
+        <div class="bgm-slot-status" id="bgmStatus1">ファイルが読み込まれていません</div>
+      </div>
+      <label class="btn ghost" style="--accent:var(--terra);--accent-d:var(--terra-d);cursor:pointer;white-space:nowrap;flex-shrink:0">
+        読み込む<input type="file" id="bgmFile1" accept="audio/*" style="display:none">
+      </label>
+      <button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d);padding:.5rem .75rem;flex-shrink:0" id="bgmPlay1" disabled>▶</button>
+    </div>
+
+    <div style="margin:.8rem 0">
+      <label>音量</label>
+      <div style="display:flex;align-items:center;gap:.9rem;margin-top:.3rem">
+        <input type="range" id="bgmVolCtrl" min="0" max="100" value="30" style="flex:1;accent-color:var(--terra)">
+        <span style="font-weight:700;min-width:3rem;text-align:right" id="bgmVolLabel">30%</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:1.2rem;margin-top:.6rem">
+      <label class="settings-toggle"><input type="checkbox" id="bgmLoop" checked> ループ再生</label>
+      <label class="settings-toggle"><input type="checkbox" id="bgmFade"> フェードイン（5秒）</label>
+    </div>
+    <div class="note" style="margin-top:.8rem">💡 ファイルを読み込んだら、画面下のプレイヤーバーで ▶ / ⏸ / ⏭ 操作ができます。</div>
+  </div>
+
+  <!-- 通知設定（ホームと共通） -->
+  <div class="card">
+    <h3>🔔 通知リマインダー</h3>
+    <div class="why"><b>毎日決まった時間に通知</b>して練習のきっかけを作ります（ホームからも設定可能）。</div>
+    <p class="lead" style="font-size:.88rem">通知の設定はホーム画面の「🔔 通知リマインダー」カードで行えます。</p>
+    <div class="btn-row">
+      <button class="btn ghost" style="--accent:var(--terra);--accent-d:var(--terra-d)" onclick="$$('[data-group=main] .nav-tab').forEach(t=>t.classList.toggle('active',t.dataset.target==='m-home'));$$('.main-section').forEach(p=>p.classList.toggle('show',p.id==='m-home'));window.scrollTo({top:9999,behavior:'smooth'})">ホームで設定 →</button>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <!-- PB お祝いオーバーレイ -->
@@ -869,6 +961,19 @@ canvas{margin-top:1rem;max-height:300px;}
       <button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d)" id="pbClose">閉じる</button>
     </div>
   </div>
+</div>
+
+<!-- BGM プレイヤーバー（固定・常時表示） -->
+<div class="bgm-bar" id="bgmPlayerBar">
+  <div class="bgm-info">
+    <span class="bgm-bar-title" id="bgmBarTitle">BGMなし</span>
+    <span class="bgm-bar-sub" id="bgmBarSub">ファイルを読み込んでください（設定 → BGM設定）</span>
+  </div>
+  <button class="bgm-btn" id="bgmBarPrev" title="前のBGM">⏮</button>
+  <button class="bgm-btn" id="bgmBarPlay" title="再生/停止">▶</button>
+  <button class="bgm-btn" id="bgmBarNext" title="次のBGM">⏭</button>
+  <input type="range" class="bgm-bar-vol" id="bgmBarVol" min="0" max="100" value="30" title="音量">
+  <span class="bgm-bar-vol-lbl" id="bgmBarVolLbl">30%</span>
 </div>
 
 <script>
@@ -911,6 +1016,7 @@ function setupTabs(group){
       tab.classList.add("active");
       $$(`.main-section[data-pane-group="${group}"]`).forEach(p=>p.classList.toggle("show",p.id===target));
       if(target==="m-mem"){drawMemChart();renderMemTitles();}
+      if(target==="m-settings"){renderNotifSettings();}
     });
   });
 }
@@ -1611,6 +1717,166 @@ if($("#gachaStart")){
 }
 
 renderNotifSettings();
+
+/* ============================================================
+   [NEW] BGM管理
+============================================================ */
+const BGM_SETTINGS_KEY="bgm_settings";
+const BGM_NAMES=["432Hz","528Hz"];
+let bgmAudios=[null,null];
+let bgmCurrentSlot=-1;
+let bgmIsPlaying=false;
+
+function getBGMSettings(){return JSON.parse(localStorage.getItem(BGM_SETTINGS_KEY)||'{"volume":30,"loop":true,"fade":false}');}
+function saveBGMSettings(s){localStorage.setItem(BGM_SETTINGS_KEY,JSON.stringify(s));}
+
+function updateBGMBar(){
+  const playing=bgmIsPlaying&&bgmCurrentSlot>=0;
+  const title=bgmCurrentSlot>=0?BGM_NAMES[bgmCurrentSlot]:"BGMなし";
+  const sub=playing?"🎵 再生中":bgmCurrentSlot>=0?"停止中 — ▶ で再生":"ファイルを読み込んでください（設定 → BGM設定）";
+  const titleEl=$("#bgmBarTitle"),subEl=$("#bgmBarSub"),playBtn=$("#bgmBarPlay");
+  if(titleEl)titleEl.textContent=title;
+  if(subEl)subEl.textContent=sub;
+  if(playBtn){playBtn.textContent=playing?"⏸":"▶";playBtn.classList.toggle("playing",playing);}
+}
+
+function bgmApplySettings(){
+  const s=getBGMSettings();
+  bgmAudios.forEach(a=>{if(a){a.volume=s.volume/100;a.loop=s.loop;}});
+}
+
+async function bgmFadeIn(audio,targetVol,durationMs){
+  audio.volume=0.001;
+  const steps=25,stepMs=durationMs/steps,inc=targetVol/steps;
+  for(let i=0;i<=steps;i++){
+    await new Promise(r=>setTimeout(r,stepMs));
+    audio.volume=Math.min(targetVol,i*inc);
+  }
+}
+
+function bgmPlay(slot){
+  if(slot<0||slot>1||!bgmAudios[slot])return;
+  if(bgmCurrentSlot!==slot&&bgmCurrentSlot>=0&&bgmAudios[bgmCurrentSlot]){
+    bgmAudios[bgmCurrentSlot].pause();bgmAudios[bgmCurrentSlot].currentTime=0;
+  }
+  bgmCurrentSlot=slot;
+  const s=getBGMSettings();
+  const audio=bgmAudios[slot];
+  audio.loop=s.loop;
+  audio.play().then(()=>{
+    bgmIsPlaying=true;
+    if(s.fade){bgmFadeIn(audio,s.volume/100,5000);}else{audio.volume=s.volume/100;}
+    updateBGMBar();updateBGMPlayBtns();
+  }).catch(()=>{});
+}
+
+function bgmPause(){
+  if(bgmCurrentSlot>=0&&bgmAudios[bgmCurrentSlot]){
+    bgmAudios[bgmCurrentSlot].pause();bgmIsPlaying=false;updateBGMBar();updateBGMPlayBtns();
+  }
+}
+
+function bgmToggle(){
+  if(bgmIsPlaying)bgmPause();
+  else{
+    const slot=bgmCurrentSlot>=0?bgmCurrentSlot:(bgmAudios[0]?0:bgmAudios[1]?1:-1);
+    if(slot>=0)bgmPlay(slot);
+  }
+}
+
+function bgmNext(){
+  const next=(bgmCurrentSlot+1)%2;
+  if(bgmAudios[next])bgmPlay(next);
+}
+
+function bgmPrev(){
+  const prev=bgmCurrentSlot<=0?1:0;
+  if(bgmAudios[prev])bgmPlay(prev);
+}
+
+function updateBGMPlayBtns(){
+  for(let i=0;i<2;i++){
+    const btn=$(`#bgmPlay${i}`);if(!btn)continue;
+    const active=bgmIsPlaying&&bgmCurrentSlot===i;
+    btn.textContent=active?"⏸":"▶";
+    btn.style.background=active?"#4caf50":"";
+  }
+}
+
+/* ファイル読み込み・設定初期化 */
+(function(){
+  const s=getBGMSettings();
+  const volCtrl=$("#bgmVolCtrl"),volLabel=$("#bgmVolLabel"),loopCb=$("#bgmLoop"),fadeCb=$("#bgmFade");
+  if(volCtrl){volCtrl.value=s.volume;if(volLabel)volLabel.textContent=s.volume+"%";}
+  if(loopCb)loopCb.checked=s.loop;
+  if(fadeCb)fadeCb.checked=s.fade;
+  const barVol=$("#bgmBarVol"),barLbl=$("#bgmBarVolLbl");
+  if(barVol){barVol.value=s.volume;if(barLbl)barLbl.textContent=s.volume+"%";}
+
+  for(let i=0;i<2;i++){
+    const slot=i;
+    const fileInput=$(`#bgmFile${slot}`);
+    if(fileInput){
+      fileInput.onchange=(e)=>{
+        const file=e.target.files[0];if(!file)return;
+        if(bgmAudios[slot]){bgmAudios[slot].pause();try{URL.revokeObjectURL(bgmAudios[slot].src);}catch(_){}}
+        const url=URL.createObjectURL(file);
+        bgmAudios[slot]=new Audio(url);
+        const sc=getBGMSettings();bgmAudios[slot].volume=sc.volume/100;bgmAudios[slot].loop=sc.loop;
+        bgmAudios[slot].onended=()=>{if(!sc.loop){bgmIsPlaying=false;updateBGMBar();updateBGMPlayBtns();}};
+        const statusEl=$(`#bgmStatus${slot}`),slotEl=$(`#bgmSlot${slot}`),playBtn=$(`#bgmPlay${slot}`);
+        if(statusEl){statusEl.textContent="✅ "+file.name;statusEl.className="bgm-slot-status ok";}
+        if(slotEl)slotEl.classList.add("loaded");
+        if(playBtn)playBtn.disabled=false;
+        if(bgmCurrentSlot<0){bgmCurrentSlot=slot;updateBGMBar();}
+        e.target.value="";
+      };
+    }
+    const playBtn=$(`#bgmPlay${slot}`);
+    if(playBtn){
+      playBtn.onclick=()=>{
+        if(bgmIsPlaying&&bgmCurrentSlot===slot)bgmPause();else bgmPlay(slot);
+      };
+    }
+  }
+})();
+
+/* 音量コントロール */
+(function(){
+  const ctrl=$("#bgmVolCtrl"),label=$("#bgmVolLabel");
+  if(ctrl){
+    ctrl.oninput=()=>{
+      const vol=parseInt(ctrl.value);
+      if(label)label.textContent=vol+"%";
+      const s=getBGMSettings();s.volume=vol;saveBGMSettings(s);bgmApplySettings();
+      const bv=$("#bgmBarVol"),bl=$("#bgmBarVolLbl");
+      if(bv)bv.value=vol;if(bl)bl.textContent=vol+"%";
+    };
+  }
+  const loopCb=$("#bgmLoop");
+  if(loopCb)loopCb.onchange=()=>{const s=getBGMSettings();s.loop=loopCb.checked;saveBGMSettings(s);bgmApplySettings();};
+  const fadeCb=$("#bgmFade");
+  if(fadeCb)fadeCb.onchange=()=>{const s=getBGMSettings();s.fade=fadeCb.checked;saveBGMSettings(s);};
+})();
+
+/* バーコントロール */
+(function(){
+  const barVol=$("#bgmBarVol"),barLbl=$("#bgmBarVolLbl");
+  if(barVol){
+    barVol.oninput=()=>{
+      const vol=parseInt(barVol.value);
+      if(barLbl)barLbl.textContent=vol+"%";
+      const s=getBGMSettings();s.volume=vol;saveBGMSettings(s);bgmApplySettings();
+      const c=$("#bgmVolCtrl"),l=$("#bgmVolLabel");
+      if(c)c.value=vol;if(l)l.textContent=vol+"%";
+    };
+  }
+  $("#bgmBarPlay")&&$("#bgmBarPlay").addEventListener("click",bgmToggle);
+  $("#bgmBarPrev")&&$("#bgmBarPrev").addEventListener("click",bgmPrev);
+  $("#bgmBarNext")&&$("#bgmBarNext").addEventListener("click",bgmNext);
+})();
+
+updateBGMBar();
 
 /* ============================================================
    記憶力レベルテスト
