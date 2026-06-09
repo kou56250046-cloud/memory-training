@@ -886,7 +886,7 @@ canvas{margin-top:1rem;max-height:300px;}
   <!-- BGM設定 -->
   <div class="card">
     <h3>🎵 BGM設定</h3>
-    <div class="why"><b>トレーニング中に流すBGM</b>をここで管理します。ファイルを読み込んで、下の再生コントロールで操作してください。ページを再読み込みすると再選択が必要です。</div>
+    <div class="why"><b>432Hz・528Hz のデフォルトBGM</b>が自動で読み込まれます。別のファイルに変更したい場合は「変更」ボタンで上書きできます。</div>
 
     <div class="bgm-slot" id="bgmSlot0">
       <div class="bgm-slot-icon">🎵</div>
@@ -895,7 +895,7 @@ canvas{margin-top:1rem;max-height:300px;}
         <div class="bgm-slot-status" id="bgmStatus0">ファイルが読み込まれていません</div>
       </div>
       <label class="btn ghost" style="--accent:var(--terra);--accent-d:var(--terra-d);cursor:pointer;white-space:nowrap;flex-shrink:0">
-        読み込む<input type="file" id="bgmFile0" accept="audio/*" style="display:none">
+        変更<input type="file" id="bgmFile0" accept="audio/*" style="display:none">
       </label>
       <button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d);padding:.5rem .75rem;flex-shrink:0" id="bgmPlay0" disabled>▶</button>
     </div>
@@ -907,7 +907,7 @@ canvas{margin-top:1rem;max-height:300px;}
         <div class="bgm-slot-status" id="bgmStatus1">ファイルが読み込まれていません</div>
       </div>
       <label class="btn ghost" style="--accent:var(--terra);--accent-d:var(--terra-d);cursor:pointer;white-space:nowrap;flex-shrink:0">
-        読み込む<input type="file" id="bgmFile1" accept="audio/*" style="display:none">
+        変更<input type="file" id="bgmFile1" accept="audio/*" style="display:none">
       </label>
       <button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d);padding:.5rem .75rem;flex-shrink:0" id="bgmPlay1" disabled>▶</button>
     </div>
@@ -1798,6 +1798,25 @@ function updateBGMPlayBtns(){
   if(volCtrl){volCtrl.value=s.volume;if(volLabel)volLabel.textContent=s.volume+"%";}
   if(loopCb)loopCb.checked=s.loop;
   if(fadeCb)fadeCb.checked=s.fade;
+  /* デフォルトBGM自動読み込み */
+  const DEFAULT_BGM=['bgm/432Hz.mp3','bgm/528Hz.mp3'];
+  for(let i=0;i<2;i++){
+    (function(slot){
+      const sc=getBGMSettings();
+      const audio=new Audio(DEFAULT_BGM[slot]);
+      audio.volume=sc.volume/100;audio.loop=sc.loop;
+      audio.onended=()=>{if(!sc.loop){bgmIsPlaying=false;updateBGMBar();updateBGMPlayBtns();}};
+      audio.addEventListener('canplay',()=>{
+        bgmAudios[slot]=audio;
+        const statusEl=$(`#bgmStatus${slot}`),slotEl=$(`#bgmSlot${slot}`),playBtn=$(`#bgmPlay${slot}`);
+        if(statusEl){statusEl.textContent="✅ "+BGM_NAMES[slot]+".mp3";statusEl.className="bgm-slot-status ok";}
+        if(slotEl)slotEl.classList.add("loaded");
+        if(playBtn)playBtn.disabled=false;
+        if(bgmCurrentSlot<0){bgmCurrentSlot=0;updateBGMBar();}
+      },{once:true});
+    })(i);
+  }
+
   for(let i=0;i<2;i++){
     const slot=i;
     const fileInput=$(`#bgmFile${slot}`);
