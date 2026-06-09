@@ -62,7 +62,7 @@ nav.tabs .nav-tab{
 nav.tabs .nav-tab:hover{color:var(--ink);}
 nav.tabs .nav-tab.active{background:var(--ink);color:#fff;}
 
-main{max-width:980px;margin:0 auto;padding:1.4rem 1.1rem 5rem;}
+main{max-width:980px;margin:0 auto;padding:1.4rem 1.1rem 1.4rem;}
 .main-section{display:none;animation:fade .35s ease;}
 .main-section.show{display:block;}
 @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
@@ -305,20 +305,11 @@ canvas{margin-top:1rem;max-height:300px;}
 .filter-row label{font-size:.82rem;font-weight:700;color:var(--muted);margin:0;}
 .filter-row select{padding:.3rem .55rem;font-size:.85rem;width:auto;}
 
-/* ===== [NEW] BGM プレイヤーバー ===== */
-.bgm-bar{position:fixed;bottom:0;left:0;right:0;z-index:45;
-  background:rgba(32,30,27,.94);backdrop-filter:blur(12px);
-  color:#ede9e1;padding:.5rem 1rem;
-  display:flex;align-items:center;gap:.6rem;border-top:1px solid rgba(255,255,255,.1);}
-.bgm-info{flex:1;min-width:0;overflow:hidden;}
-.bgm-bar-title{font-size:.82rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
-.bgm-bar-sub{font-size:.68rem;color:rgba(255,255,255,.42);display:block;}
+/* ===== BGM 再生ボタン ===== */
 .bgm-btn{border:none;background:rgba(255,255,255,.13);cursor:pointer;font-size:.88rem;
   padding:.32rem .52rem;border-radius:6px;color:#ede9e1;transition:.15s;line-height:1;flex-shrink:0;}
 .bgm-btn:hover{background:rgba(255,255,255,.24);}
 .bgm-btn.playing{background:var(--terra);}
-.bgm-bar-vol{width:55px;accent-color:var(--terra);vertical-align:middle;}
-.bgm-bar-vol-lbl{font-size:.7rem;color:rgba(255,255,255,.45);min-width:2.4rem;text-align:right;}
 
 /* ===== [NEW] 設定ページ ===== */
 .bgm-slot{display:flex;align-items:center;gap:.7rem;padding:.85rem 1rem;
@@ -895,7 +886,7 @@ canvas{margin-top:1rem;max-height:300px;}
   <!-- BGM設定 -->
   <div class="card">
     <h3>🎵 BGM設定</h3>
-    <div class="why"><b>トレーニング中に流すBGM</b>をここで管理します。ファイルを読み込んで、画面下のプレイヤーバーで操作してください。ページを再読み込みすると再選択が必要です。</div>
+    <div class="why"><b>トレーニング中に流すBGM</b>をここで管理します。ファイルを読み込んで、下の再生コントロールで操作してください。ページを再読み込みすると再選択が必要です。</div>
 
     <div class="bgm-slot" id="bgmSlot0">
       <div class="bgm-slot-icon">🎵</div>
@@ -933,7 +924,16 @@ canvas{margin-top:1rem;max-height:300px;}
       <label class="settings-toggle"><input type="checkbox" id="bgmLoop" checked> ループ再生</label>
       <label class="settings-toggle"><input type="checkbox" id="bgmFade"> フェードイン（5秒）</label>
     </div>
-    <div class="note" style="margin-top:.8rem">💡 ファイルを読み込んだら、画面下のプレイヤーバーで ▶ / ⏸ / ⏭ 操作ができます。</div>
+    <!-- BGM 再生コントロール -->
+    <div style="display:flex;align-items:center;gap:.5rem;padding:.55rem .85rem;background:rgba(32,30,27,.88);border-radius:10px;margin-top:.8rem">
+      <div style="flex:1;min-width:0;overflow:hidden">
+        <span style="font-size:.82rem;font-weight:700;color:#ede9e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block" id="bgmBarTitle">BGMなし</span>
+        <span style="font-size:.68rem;color:rgba(255,255,255,.5);display:block" id="bgmBarSub">ファイルを読み込んでください</span>
+      </div>
+      <button class="bgm-btn" id="bgmBarPrev" title="前のBGM">⏮</button>
+      <button class="bgm-btn" id="bgmBarPlay" title="再生/停止">▶</button>
+      <button class="bgm-btn" id="bgmBarNext" title="次のBGM">⏭</button>
+    </div>
   </div>
 
   <!-- 通知設定（ホームと共通） -->
@@ -963,18 +963,6 @@ canvas{margin-top:1rem;max-height:300px;}
   </div>
 </div>
 
-<!-- BGM プレイヤーバー（固定・常時表示） -->
-<div class="bgm-bar" id="bgmPlayerBar">
-  <div class="bgm-info">
-    <span class="bgm-bar-title" id="bgmBarTitle">BGMなし</span>
-    <span class="bgm-bar-sub" id="bgmBarSub">ファイルを読み込んでください（設定 → BGM設定）</span>
-  </div>
-  <button class="bgm-btn" id="bgmBarPrev" title="前のBGM">⏮</button>
-  <button class="bgm-btn" id="bgmBarPlay" title="再生/停止">▶</button>
-  <button class="bgm-btn" id="bgmBarNext" title="次のBGM">⏭</button>
-  <input type="range" class="bgm-bar-vol" id="bgmBarVol" min="0" max="100" value="30" title="音量">
-  <span class="bgm-bar-vol-lbl" id="bgmBarVolLbl">30%</span>
-</div>
 
 <script>
 /* ============================================================
@@ -1810,9 +1798,6 @@ function updateBGMPlayBtns(){
   if(volCtrl){volCtrl.value=s.volume;if(volLabel)volLabel.textContent=s.volume+"%";}
   if(loopCb)loopCb.checked=s.loop;
   if(fadeCb)fadeCb.checked=s.fade;
-  const barVol=$("#bgmBarVol"),barLbl=$("#bgmBarVolLbl");
-  if(barVol){barVol.value=s.volume;if(barLbl)barLbl.textContent=s.volume+"%";}
-
   for(let i=0;i<2;i++){
     const slot=i;
     const fileInput=$(`#bgmFile${slot}`);
@@ -1849,8 +1834,6 @@ function updateBGMPlayBtns(){
       const vol=parseInt(ctrl.value);
       if(label)label.textContent=vol+"%";
       const s=getBGMSettings();s.volume=vol;saveBGMSettings(s);bgmApplySettings();
-      const bv=$("#bgmBarVol"),bl=$("#bgmBarVolLbl");
-      if(bv)bv.value=vol;if(bl)bl.textContent=vol+"%";
     };
   }
   const loopCb=$("#bgmLoop");
@@ -1859,18 +1842,8 @@ function updateBGMPlayBtns(){
   if(fadeCb)fadeCb.onchange=()=>{const s=getBGMSettings();s.fade=fadeCb.checked;saveBGMSettings(s);};
 })();
 
-/* バーコントロール */
+/* 再生コントロール */
 (function(){
-  const barVol=$("#bgmBarVol"),barLbl=$("#bgmBarVolLbl");
-  if(barVol){
-    barVol.oninput=()=>{
-      const vol=parseInt(barVol.value);
-      if(barLbl)barLbl.textContent=vol+"%";
-      const s=getBGMSettings();s.volume=vol;saveBGMSettings(s);bgmApplySettings();
-      const c=$("#bgmVolCtrl"),l=$("#bgmVolLabel");
-      if(c)c.value=vol;if(l)l.textContent=vol+"%";
-    };
-  }
   $("#bgmBarPlay")&&$("#bgmBarPlay").addEventListener("click",bgmToggle);
   $("#bgmBarPrev")&&$("#bgmBarPrev").addEventListener("click",bgmPrev);
   $("#bgmBarNext")&&$("#bgmBarNext").addEventListener("click",bgmNext);
