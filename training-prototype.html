@@ -246,6 +246,64 @@ canvas{margin-top:1rem;max-height:300px;}
 .spatial-cell.selected{background:color-mix(in srgb,var(--accent) 40%,white);border-color:var(--accent);}
 .spatial-cell.correct{background:#4caf50;border-color:#388e3c;}
 .spatial-cell.wrong{background:#f44336;border-color:#c62828;}
+
+/* ===== [NEW] 習慣カレンダー ===== */
+.habit-cal{display:flex;gap:3px;flex-wrap:wrap;margin:.8rem 0;}
+.habit-day{width:13px;height:13px;border-radius:2px;background:var(--line-soft);cursor:default;}
+.habit-day.l1{background:color-mix(in srgb,var(--terra) 35%,white);}
+.habit-day.l2{background:color-mix(in srgb,var(--terra) 60%,white);}
+.habit-day.l3{background:var(--terra);}
+.habit-legend{display:flex;align-items:center;gap:.4rem;font-size:.74rem;color:var(--muted);margin-top:.3rem;}
+.habit-legend .hb{width:11px;height:11px;border-radius:2px;display:inline-block;}
+.streak-badge{display:inline-flex;align-items:center;gap:.4rem;background:linear-gradient(135deg,#ff6b35,#f7931e);color:#fff;padding:.4rem .9rem;border-radius:999px;font-weight:700;font-size:.9rem;margin-bottom:.5rem;}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:.8rem 0;}
+.stat-tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.7rem .5rem;text-align:center;}
+.stat-tile .st-num{font-size:1.4rem;font-weight:900;font-family:"Zen Old Mincho",serif;color:var(--accent-d);}
+.stat-tile .st-lab{font-size:.7rem;color:var(--muted);}
+
+/* ===== [NEW] PB お祝いオーバーレイ ===== */
+.pb-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.52);align-items:center;justify-content:center;padding:1rem;}
+.pb-overlay.show{display:flex;animation:pbFadeIn .3s ease;}
+@keyframes pbFadeIn{from{opacity:0;}to{opacity:1;}}
+.pb-box{background:var(--surface);border-radius:var(--radius);padding:2rem 1.8rem;text-align:center;max-width:300px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.28);animation:pbPop .4s cubic-bezier(.2,.8,.2,1);}
+@keyframes pbPop{from{transform:scale(.6);opacity:0;}to{transform:scale(1);opacity:1;}}
+.pb-trophy{font-size:3.5rem;display:block;margin-bottom:.4rem;animation:pbBounce .8s infinite alternate ease-in-out;}
+@keyframes pbBounce{from{transform:translateY(0);}to{transform:translateY(-10px);}}
+.pb-new-score{font-size:1.8rem;font-weight:900;font-family:"Zen Old Mincho",serif;color:var(--terra-d);margin:.4rem 0;}
+
+/* ===== [NEW] 正解/不正解 アニメーション ===== */
+@keyframes glowGreen{0%{box-shadow:none;}50%{box-shadow:0 0 0 10px rgba(76,175,80,.25);}100%{box-shadow:none;}}
+@keyframes shakeBad{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-8px);}40%,80%{transform:translateX(8px);}}
+.anim-correct{animation:glowGreen .55s ease;}
+.anim-wrong{animation:shakeBad .4s ease;}
+.result-delta{font-size:.8rem;font-weight:700;}
+.result-delta.up{color:#4caf50;}
+.result-delta.down{color:#f44336;}
+.pill-pb{background:linear-gradient(135deg,#ff6b35,#f7931e)!important;color:#fff!important;border:none!important;}
+
+/* ===== [NEW] 円形プログレスタイマー ===== */
+.circ-wrap{display:none;justify-content:center;align-items:center;padding:.5rem 0;}
+.circ-prog{width:80px;height:80px;border-radius:50%;background:conic-gradient(var(--terra) 360deg,var(--line-soft) 0deg);display:flex;align-items:center;justify-content:center;}
+.circ-inner{width:60px;height:60px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;color:var(--ink);}
+
+/* ===== [NEW] カスタムセッション ===== */
+.session-run{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:.8rem 1rem;margin-bottom:.6rem;display:flex;align-items:center;gap:.7rem;}
+.module-check{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0;}
+.module-check label{display:flex;align-items:center;gap:.3rem;font-size:.85rem;font-weight:400;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.35rem .7rem;cursor:pointer;transition:.15s;color:var(--ink);}
+.module-check input[type=checkbox]{accent-color:var(--terra);}
+.module-check label:has(input:checked){border-color:var(--terra);background:color-mix(in srgb,var(--terra) 10%,white);}
+
+/* ===== [NEW] ランダムチャレンジ ===== */
+.gacha-box{text-align:center;padding:1.8rem;background:linear-gradient(135deg,color-mix(in srgb,var(--terra) 7%,var(--surface)),var(--surface));border-radius:var(--radius);border:2px dashed var(--terra);margin:1rem 0;}
+.gacha-name{font-size:1.6rem;font-weight:900;font-family:"Zen Old Mincho",serif;margin:.5rem 0;color:var(--terra-d);}
+@keyframes gachaPop{from{transform:scale(.4) rotate(-12deg);opacity:0;}to{transform:none;opacity:1;}}
+.gacha-anim{animation:gachaPop .45s cubic-bezier(.2,.8,.2,1);}
+.gacha-detail{font-size:.9rem;color:var(--muted);margin:.3rem 0 .8rem;}
+
+/* ===== [NEW] 統計フィルタ ===== */
+.filter-row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.6rem .8rem;background:color-mix(in srgb,var(--accent) 4%,var(--surface));border:1px solid var(--line);border-radius:10px;}
+.filter-row label{font-size:.82rem;font-weight:700;color:var(--muted);margin:0;}
+.filter-row select{padding:.3rem .55rem;font-size:.85rem;width:auto;}
 </style>
 </head>
 <body>
@@ -293,6 +351,38 @@ canvas{margin-top:1rem;max-height:300px;}
     </div>
   </div>
 
+  <div class="card">
+    <h3>🔔 通知リマインダー</h3>
+    <div class="why"><b>毎日決まった時間に通知</b>して練習のきっかけを作ります。ブラウザの通知許可が必要です。</div>
+    <div class="row">
+      <div>
+        <label>通知時刻</label>
+        <input type="time" id="notifTime" value="20:00" style="width:auto;padding:.45rem .6rem">
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:.5rem;flex-wrap:wrap">
+        <label style="display:flex;align-items:center;gap:.4rem;font-weight:700;font-size:.9rem;color:var(--ink);cursor:pointer">
+          <input type="checkbox" id="notifEnabled" style="width:1.1rem;height:1.1rem;accent-color:var(--terra)"> 通知を有効にする
+        </label>
+      </div>
+    </div>
+    <div style="margin:.6rem 0">
+      <label>曜日</label>
+      <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.3rem" id="notifDayWrap">
+        <label style="display:flex;align-items:center;gap:.2rem;font-size:.85rem;font-weight:400;cursor:pointer"><input type="checkbox" id="notifDay0" value="1" checked style="accent-color:var(--terra)"> 月</label>
+        <label style="display:flex;align-items:center;gap:.2rem;font-size:.85rem;font-weight:400;cursor:pointer"><input type="checkbox" id="notifDay1" value="2" checked style="accent-color:var(--terra)"> 火</label>
+        <label style="display:flex;align-items:center;gap:.2rem;font-size:.85rem;font-weight:400;cursor:pointer"><input type="checkbox" id="notifDay2" value="3" checked style="accent-color:var(--terra)"> 水</label>
+        <label style="display:flex;align-items:center;gap:.2rem;font-size:.85rem;font-weight:400;cursor:pointer"><input type="checkbox" id="notifDay3" value="4" checked style="accent-color:var(--terra)"> 木</label>
+        <label style="display:flex;align-items:center;gap:.2rem;font-size:.85rem;font-weight:400;cursor:pointer"><input type="checkbox" id="notifDay4" value="5" checked style="accent-color:var(--terra)"> 金</label>
+        <label style="display:flex;align-items:center;gap:.2rem;font-size:.85rem;font-weight:400;cursor:pointer"><input type="checkbox" id="notifDay5" value="6" style="accent-color:var(--terra)"> 土</label>
+        <label style="display:flex;align-items:center;gap:.2rem;font-size:.85rem;font-weight:400;cursor:pointer"><input type="checkbox" id="notifDay6" value="0" style="accent-color:var(--terra)"> 日</label>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d)" id="notifSave">設定を保存</button>
+    </div>
+    <div class="note" id="notifStatus">通知はオフです</div>
+  </div>
+
   <div class="footer">完全ローカル保存（この端末内）。データは外部に送信されません。</div>
 </section>
 
@@ -317,6 +407,8 @@ canvas{margin-top:1rem;max-height:300px;}
       <div class="menu-card" data-open="me-memory-level"><span class="ic">🧪</span><h4>記憶力レベルテスト</h4><p>世界基準と比較</p><span class="arrow">→</span></div>
       <div class="menu-card" data-open="me-log"><span class="ic">📊</span><h4>記録</h4><p>称号・スコア推移</p><span class="arrow">→</span></div>
       <div class="menu-card" data-open="me-yorozu"><span class="ic">🔢</span><h4>00〜99 語呂表</h4><p>形と語呂で数字を絵にする</p><span class="arrow">→</span></div>
+      <div class="menu-card" data-open="me-session"><span class="ic">📋</span><h4>マイコース</h4><p>種目を組み合わせて実行</p><span class="arrow">→</span></div>
+      <div class="menu-card" data-open="me-random"><span class="ic">🎲</span><h4>ランダムチャレンジ</h4><p>今日の課題をガチャで決定</p><span class="arrow">→</span></div>
     </div>
   </div>
 
@@ -412,7 +504,8 @@ canvas{margin-top:1rem;max-height:300px;}
       </div>
       <div class="btn-row"><button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d)" id="numStart">開始</button></div>
       <div class="stage" id="numStage">「開始」で数字が表示されます</div>
-      <div class="prog"><i id="numBar"></i></div>
+      <div class="prog" id="numProgBar"><i id="numBar"></i></div>
+      <div class="circ-wrap" id="numCircWrap"><div class="circ-prog" id="numCircProg"><div class="circ-inner" id="numCircInner">--</div></div></div>
       <div id="numAnswer" style="display:none">
         <label>思い出して入力</label>
         <textarea id="numInput" inputmode="numeric"></textarea>
@@ -435,7 +528,8 @@ canvas{margin-top:1rem;max-height:300px;}
       </div>
       <div class="btn-row"><button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d)" id="mwStart">単語を見る</button></div>
       <div class="stage" id="mwStage">「単語を見る」を押すと単語が表示されます</div>
-      <div class="prog"><i id="mwBar"></i></div>
+      <div class="prog" id="mwProgBar"><i id="mwBar"></i></div>
+      <div class="circ-wrap" id="mwCircWrap"><div class="circ-prog" id="mwCircProg"><div class="circ-inner" id="mwCircInner">--</div></div></div>
       <div id="mwAnswer" style="display:none">
         <label>思い出せた単語を、改行か読点で区切って入力</label>
         <textarea id="mwInput" placeholder="りんご、電車、…"></textarea>
@@ -659,6 +753,58 @@ canvas{margin-top:1rem;max-height:300px;}
     </div>
   </div>
 
+  <!-- マイコース -->
+  <div class="detail" id="me-session" data-detail-group="mem">
+    <div class="backbar"><button class="back-btn" data-back="mem">← 一覧へ</button><span class="detail-title">📋 マイコース</span></div>
+    <div class="card">
+      <h3>📋 コースを作成</h3>
+      <div class="why"><b>複数の種目を連続で実行</b>できます。自分だけのルーティンを組んで毎日の練習に使いましょう。</div>
+      <label>コース名</label>
+      <input type="text" id="sessionName" placeholder="例：朝の5分コース">
+      <label style="margin-top:.8rem">含める種目（複数選択可）</label>
+      <div class="module-check" id="sessionModules">
+        <label><input type="checkbox" value="num"> 🔢 数字記憶</label>
+        <label><input type="checkbox" value="word"> 📝 単語記憶</label>
+        <label><input type="checkbox" value="pair"> 🃏 カード配置記憶</label>
+        <label><input type="checkbox" value="dom"> 🎴 ドミニクドリル</label>
+        <label><input type="checkbox" value="yorozu"> 📖 語呂合わせドリル</label>
+      </div>
+      <div class="btn-row">
+        <button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d)" id="sessionSave">コースを保存</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>▶ 保存済みコース</h3>
+      <div id="sessionList"><p class="lead" style="color:var(--muted)">まだコースがありません</p></div>
+    </div>
+  </div>
+
+  <!-- ランダムチャレンジ -->
+  <div class="detail" id="me-random" data-detail-group="mem">
+    <div class="backbar"><button class="back-btn" data-back="mem">← 一覧へ</button><span class="detail-title">🎲 ランダムチャレンジ</span></div>
+    <div class="card">
+      <h3>🎲 今日の課題をガチャで決める</h3>
+      <div class="why"><b>毎日同じトレーニングに飽きたら</b>、ランダムで種目と難易度を決めましょう。新鮮な刺激が集中力を高めます。</div>
+      <div class="btn-row">
+        <button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d);font-size:1.1rem;padding:.7rem 1.5rem" id="gachaBtn">🎲 ガチャを引く</button>
+      </div>
+      <div class="gacha-box" id="gachaResult" style="display:none">
+        <div style="font-size:.85rem;color:var(--muted);margin-bottom:.4rem">今日のチャレンジ</div>
+        <div class="gacha-name" id="gcName">---</div>
+        <div class="gacha-detail" id="gcDetail">---</div>
+        <div class="btn-row" style="justify-content:center">
+          <button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d)" id="gachaStart">▶ チャレンジ開始</button>
+          <button class="btn ghost" style="--accent:var(--terra);--accent-d:var(--terra-d)" id="gachaReroll">↺ もう一度</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📋 チャレンジ一覧</h3>
+      <p class="lead" style="font-size:.88rem">ガチャで選ばれる課題のリストです。</p>
+      <div id="gcList" style="font-size:.85rem;color:var(--muted)"></div>
+    </div>
+  </div>
+
   <!-- 記録 -->
   <div class="detail" id="me-log" data-detail-group="mem">
     <div class="backbar"><button class="back-btn" data-back="mem">← 一覧へ</button><span class="detail-title">📊 記録</span></div>
@@ -667,7 +813,28 @@ canvas{margin-top:1rem;max-height:300px;}
       <div class="pills" id="memTitles"><span class="pill">まだ記録がありません</span></div>
     </div>
     <div class="card">
+      <h3>📅 習慣カレンダー</h3>
+      <div class="streak-badge" id="streakBadge">🔥 0日連続</div>
+      <div class="habit-cal" id="habitCal"></div>
+      <div class="habit-legend">少ない <span class="hb" style="background:var(--line-soft)"></span><span class="hb" style="background:color-mix(in srgb,var(--terra) 35%,white)"></span><span class="hb" style="background:color-mix(in srgb,var(--terra) 60%,white)"></span><span class="hb" style="background:var(--terra)"></span> 多い（過去90日）</div>
+      <div class="stat-grid" style="margin-top:.8rem">
+        <div class="stat-tile"><div class="st-num" id="stTotal">0</div><div class="st-lab">総セッション</div></div>
+        <div class="stat-tile"><div class="st-num" id="stStreak">0</div><div class="st-lab">連続日数</div></div>
+        <div class="stat-tile"><div class="st-num" id="stBest">0</div><div class="st-lab">最高スコア</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📆 週次サマリー</h3>
+      <canvas id="weekChart" style="max-height:200px"></canvas>
+    </div>
+    <div class="card">
       <h3>📊 記憶トレーニング記録</h3>
+      <div class="filter-row">
+        <label>期間</label>
+        <select id="logPeriod"><option value="all">全期間</option><option value="week">今週</option><option value="month">今月</option><option value="3m">直近3ヶ月</option></select>
+        <label>種目</label>
+        <select id="logMethod"><option value="all">全て</option></select>
+      </div>
       <div class="pills" id="memStats"></div>
       <canvas id="memChart"></canvas>
       <div class="btn-row">
@@ -689,6 +856,20 @@ canvas{margin-top:1rem;max-height:300px;}
 
 
 </main>
+
+<!-- PB お祝いオーバーレイ -->
+<div class="pb-overlay" id="pbOverlay">
+  <div class="pb-box">
+    <span class="pb-trophy">🏆</span>
+    <div style="font-weight:700;font-size:1.1rem;color:var(--terra-d)">自己新記録！</div>
+    <div style="font-size:.85rem;color:var(--muted);margin:.3rem 0" id="pbMethod">---</div>
+    <div class="pb-new-score" id="pbNewScore">0pt</div>
+    <div style="font-size:.8rem;color:var(--muted);margin-top:.4rem">素晴らしい成長です！</div>
+    <div class="btn-row" style="justify-content:center;margin-top:1rem">
+      <button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d)" id="pbClose">閉じる</button>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ============================================================
@@ -742,9 +923,11 @@ function openDetail(id){
   document.getElementById(grp+"-menu").classList.remove("show");
   $$(`.detail[data-detail-group="${grp}"]`).forEach(d=>d.classList.remove("show"));
   el.classList.add("show");
-  if(id==="me-log"){drawMemChart();renderMemTitles();}
+  if(id==="me-log"){drawMemChart();renderMemTitles();renderHabitCal();drawWeekChart();initLogFilter();}
   if(id==="me-dom")renderDomGrid();
   if(id==="me-yorozu"){renderYorozuDigit();renderYorozuGrid();}
+  if(id==="me-session")renderSessionList();
+  if(id==="me-random")renderGachaList();
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function backToMenu(grp){
@@ -769,7 +952,16 @@ $$("[data-jump]").forEach(b=>b.addEventListener("click",()=>{
 const MEM_KEY="mem_history";
 const getMem=()=>JSON.parse(localStorage.getItem(MEM_KEY)||"[]");
 const setMem=d=>localStorage.setItem(MEM_KEY,JSON.stringify(d));
-function addMem(method,acc,score){const h=getMem();h.push({date:nowStr(),method,acc:Math.round(acc),score:Math.round(score)});if(h.length>CONFIG.memHistoryMax)h.splice(0,h.length-CONFIG.memHistoryMax);setMem(h);drawMemChart();renderMemTitles();}
+function getPB(method){const h=getMem().filter(x=>x.method===method);return h.length?Math.max(...h.map(x=>x.score)):0;}
+function feedbackFor(method,acc,score){const h=getMem().filter(x=>x.method===method);if(!h.length)return null;const last=h[h.length-1];const pb=Math.max(...h.map(x=>x.score));return{dAcc:Math.round(acc-last.acc),isPB:Math.round(score)>pb,count:h.length+1};}
+function mkFeedbackPills(fb){if(!fb)return'';let s=`<span class="pill">${fb.count}回目のチャレンジ</span>`;s+=`<span class="pill">前回比<span class="result-delta ${fb.dAcc>=0?'up':'down'}">${fb.dAcc>=0?'▲':'▼'}${Math.abs(fb.dAcc)}%</span></span>`;if(fb.isPB)s+=`<span class="pill pill-pb">🏆 自己新記録！</span>`;return s;}
+function addMem(method,acc,score){
+  const prevPB=getPB(method);
+  const h=getMem();h.push({date:nowStr(),method,acc:Math.round(acc),score:Math.round(score)});
+  if(h.length>CONFIG.memHistoryMax)h.splice(0,h.length-CONFIG.memHistoryMax);
+  setMem(h);drawMemChart();renderMemTitles();
+  if(Math.round(score)>prevPB&&prevPB>0){showPBCelebration(method,Math.round(score));}
+}
 let memChart;
 function drawMemChart(){
   const h=getMem();$("#memTable").innerHTML=h.slice(-12).reverse().map(x=>`<tr><td>${x.date}</td><td>${x.method}</td><td>${x.acc}%</td><td>${x.score}</td></tr>`).join("")||`<tr><td colspan="4" style="color:var(--muted)">記録なし</td></tr>`;
@@ -823,15 +1015,29 @@ $("#numStart").onclick=()=>{
   numTarget=Array.from({length:len},()=>rand(0,9)).join("");
   $("#numStage").textContent=groupDigits(numTarget,g);$("#numStage").style.fontSize=len<=16?"":"1.4rem";
   $("#numAnswer").style.display="none";$("#numResult").innerHTML="";
-  const numT0=Date.now(),numMs=sec*1000;$("#numBar").style.width="100%";clearInterval(numBarIv);
-  numBarIv=setInterval(()=>{const p=Math.max(0,1-(Date.now()-numT0)/numMs);$("#numBar").style.width=(p*100)+"%";if(p<=0)clearInterval(numBarIv);},100);
+  const numT0=Date.now(),numMs=sec*1000;
+  const cWrap=$("#numCircWrap"),cProg=$("#numCircProg"),cIn=$("#numCircInner"),pBar=$("#numProgBar");
+  if(cWrap){cWrap.style.display="flex";if(pBar)pBar.style.display="none";}
+  else{$("#numBar").style.width="100%";}
+  clearInterval(numBarIv);
+  numBarIv=setInterval(()=>{
+    const p=Math.max(0,1-(Date.now()-numT0)/numMs);
+    if(cProg)cProg.style.background=`conic-gradient(var(--terra) ${p*360}deg,var(--line-soft) 0deg)`;
+    if(cIn)cIn.textContent=Math.ceil(p*numMs/1000)+"s";
+    else $("#numBar").style.width=(p*100)+"%";
+    if(p<=0){clearInterval(numBarIv);if(cWrap)cWrap.style.display="none";if(pBar)pBar.style.display="block";}
+  },100);
   numTimeout=setTimeout(()=>{$("#numStage").textContent="🙈 入力してください";$("#numAnswer").style.display="block";$("#numInput").value="";$("#numInput").focus();},sec*1000);
 };
 $("#numCheck").onclick=()=>{
   clearInterval(numBarIv);clearTimeout(numTimeout);
   const ans=$("#numInput").value.replace(/\D/g,"");let hit=0;for(let i=0;i<numTarget.length;i++)if(ans[i]===numTarget[i])hit++;
   const acc=hit/numTarget.length*100,sec=Number($("#numSec").value),score=acc*(numTarget.length/sec);
-  $("#numResult").innerHTML=`<span class="pill">正解：${groupDigits(numTarget,2)}</span><span class="pill">一致：${hit}/${numTarget.length}</span><span class="pill">正答率：${Math.round(acc)}%</span><span class="pill">スコア：${Math.round(score)}</span>`;
+  const fb=feedbackFor("数字記憶",acc,score);
+  const res=$("#numResult");
+  res.innerHTML=`<span class="pill">正解：${groupDigits(numTarget,2)}</span><span class="pill">一致：${hit}/${numTarget.length}</span><span class="pill">正答率：${Math.round(acc)}%</span><span class="pill">スコア：${Math.round(score)}</span>`+mkFeedbackPills(fb);
+  res.classList.remove("anim-correct","anim-wrong");void res.offsetWidth;
+  res.classList.add(acc>=50?"anim-correct":"anim-wrong");
   addMem("数字記憶",acc,score);
 };
 
@@ -844,9 +1050,19 @@ function startWordMemory(words,sec){
   mwTarget=words;
   $("#mwStage").textContent=mwTarget.join("　");
   $("#mwAnswer").style.display="none";$("#mwResult").innerHTML="";
-  const mwT0=Date.now(),mwMs=sec*1000;$("#mwBar").style.width="100%";
-  mwBarIv=setInterval(()=>{const p=Math.max(0,1-(Date.now()-mwT0)/mwMs);$("#mwBar").style.width=(p*100)+"%";if(p<=0){clearInterval(mwBarIv);
-    $("#mwStage").textContent="🙈 思い出して入力";$("#mwAnswer").style.display="block";$("#mwInput").value="";$("#mwInput").focus();}},100);
+  const mwT0=Date.now(),mwMs=sec*1000;
+  const cWrap=$("#mwCircWrap"),cProg=$("#mwCircProg"),cIn=$("#mwCircInner"),pBar=$("#mwProgBar");
+  if(cWrap){cWrap.style.display="flex";if(pBar)pBar.style.display="none";}
+  else{$("#mwBar").style.width="100%";}
+  mwBarIv=setInterval(()=>{
+    const p=Math.max(0,1-(Date.now()-mwT0)/mwMs);
+    if(cProg)cProg.style.background=`conic-gradient(var(--terra) ${p*360}deg,var(--line-soft) 0deg)`;
+    if(cIn)cIn.textContent=Math.ceil(p*mwMs/1000)+"s";
+    else $("#mwBar").style.width=(p*100)+"%";
+    if(p<=0){clearInterval(mwBarIv);
+      if(cWrap)cWrap.style.display="none";if(pBar)pBar.style.display="block";
+      $("#mwStage").textContent="🙈 思い出して入力";$("#mwAnswer").style.display="block";$("#mwInput").value="";$("#mwInput").focus();}
+  },100);
 }
 $("#mwStart").onclick=()=>{
   const n=Number($("#mwCount").value),sec=Number($("#mwSec").value);
@@ -857,7 +1073,11 @@ $("#mwCheck").onclick=()=>{
   const ans=$("#mwInput").value.split(/[、,\s\n]+/).map(s=>s.trim()).filter(Boolean);
   const hit=mwTarget.filter(w=>ans.includes(w)).length;
   const acc=hit/mwTarget.length*100,score=acc*(mwTarget.length/10);
-  $("#mwResult").innerHTML=`<span class="pill">正解：${mwTarget.join("、")}</span><span class="pill">思い出せた：${hit}/${mwTarget.length}</span><span class="pill">正答率：${Math.round(acc)}%</span><span class="pill">スコア：${Math.round(score)}</span>`;
+  const fb=feedbackFor("単語記憶",acc,score);
+  const res=$("#mwResult");
+  res.innerHTML=`<span class="pill">正解：${mwTarget.join("、")}</span><span class="pill">思い出せた：${hit}/${mwTarget.length}</span><span class="pill">正答率：${Math.round(acc)}%</span><span class="pill">スコア：${Math.round(score)}</span>`+mkFeedbackPills(fb);
+  res.classList.remove("anim-correct","anim-wrong");void res.offsetWidth;
+  res.classList.add(acc>=50?"anim-correct":"anim-wrong");
   addMem("単語記憶",acc,score);
 };
 
@@ -1192,6 +1412,205 @@ $("#yorozuDrillCheck").onclick=()=>{
 
 /* 初期描画 */
 renderDomGrid();drawMemChart();renderMemTitles();
+
+/* ============================================================
+   [NEW] PB お祝いオーバーレイ
+============================================================ */
+function showPBCelebration(method,score){
+  const ov=$("#pbOverlay");if(!ov)return;
+  $("#pbMethod").textContent=method;
+  $("#pbNewScore").textContent=score+"pt";
+  ov.classList.add("show");
+  setTimeout(()=>ov.classList.remove("show"),4000);
+}
+$("#pbClose")&&$("#pbClose").addEventListener("click",()=>$("#pbOverlay").classList.remove("show"));
+
+/* ============================================================
+   [NEW] 習慣カレンダー & ストリーク
+============================================================ */
+function safeDate(s){const d=new Date(s);return isNaN(d.getTime())?null:d;}
+function calcStreak(){
+  const h=getMem();if(!h.length)return 0;
+  const daySet=new Set();
+  h.forEach(x=>{const d=safeDate(x.date);if(d)daySet.add(d.toDateString());});
+  const today=new Date();let streak=0;
+  for(let i=0;i<366;i++){const d=new Date(today);d.setDate(today.getDate()-i);if(daySet.has(d.toDateString()))streak++;else if(i>0)break;}
+  return streak;
+}
+function renderHabitCal(){
+  const cal=$("#habitCal");if(!cal)return;
+  const h=getMem();const dayCnt={};
+  h.forEach(x=>{const d=safeDate(x.date);if(d){const k=d.toDateString();dayCnt[k]=(dayCnt[k]||0)+1;}});
+  const today=new Date();let html="";
+  for(let i=89;i>=0;i--){const d=new Date(today);d.setDate(today.getDate()-i);const cnt=dayCnt[d.toDateString()]||0;
+    const lv=cnt===0?"":cnt===1?"l1":cnt===2?"l2":"l3";
+    const ds=`${d.getMonth()+1}/${d.getDate()}`;
+    html+=`<div class="habit-day ${lv}" title="${ds}：${cnt}回"></div>`;}
+  cal.innerHTML=html;
+  const streak=calcStreak();
+  const sb=$("#streakBadge");if(sb)sb.innerHTML=`🔥 ${streak}日連続`;
+  if($("#stTotal"))$("#stTotal").textContent=h.length;
+  if($("#stStreak"))$("#stStreak").textContent=streak;
+  if($("#stBest"))$("#stBest").textContent=h.length?Math.max(...h.map(x=>x.score)):0;
+}
+
+/* ============================================================
+   [NEW] 週次サマリーチャート
+============================================================ */
+let weekChart=null;
+function drawWeekChart(){
+  const ctx=$("#weekChart");if(!ctx)return;
+  const h=getMem();const today=new Date();const weeks=[];
+  for(let w=7;w>=0;w--){
+    const start=new Date(today);start.setDate(today.getDate()-today.getDay()-w*7);start.setHours(0,0,0,0);
+    const end=new Date(start);end.setDate(start.getDate()+7);
+    const cnt=h.filter(x=>{const d=safeDate(x.date);return d&&d>=start&&d<end;}).length;
+    weeks.push({label:`${start.getMonth()+1}/${start.getDate()}〜`,cnt});
+  }
+  if(weekChart)weekChart.destroy();
+  weekChart=new Chart(ctx,{type:"bar",data:{labels:weeks.map(w=>w.label),datasets:[{label:"セッション数",data:weeks.map(w=>w.cnt),backgroundColor:"rgba(185,116,58,.7)",borderRadius:5}]},options:{scales:{y:{beginAtZero:true,ticks:{stepSize:1}}},plugins:{legend:{display:false}}}});
+}
+
+/* ============================================================
+   [NEW] 統計フィルタ
+============================================================ */
+function initLogFilter(){
+  const methodSel=$("#logMethod");if(!methodSel)return;
+  const methods=[...new Set(getMem().map(x=>x.method))];
+  const cur=methodSel.value;
+  methodSel.innerHTML='<option value="all">全て</option>'+methods.map(m=>`<option value="${m}">${m}</option>`).join("");
+  if(methods.includes(cur))methodSel.value=cur;
+  function applyFilter(){
+    const period=$("#logPeriod").value,method=methodSel.value;
+    let h=getMem();const now=new Date();
+    if(period==="week"){const s=new Date(now);s.setDate(now.getDate()-7);h=h.filter(x=>{const d=safeDate(x.date);return d&&d>=s;});}
+    else if(period==="month"){const s=new Date(now);s.setMonth(now.getMonth()-1);h=h.filter(x=>{const d=safeDate(x.date);return d&&d>=s;});}
+    else if(period==="3m"){const s=new Date(now);s.setMonth(now.getMonth()-3);h=h.filter(x=>{const d=safeDate(x.date);return d&&d>=s;});}
+    if(method!=="all")h=h.filter(x=>x.method===method);
+    $("#memTable").innerHTML=h.slice(-12).reverse().map(x=>`<tr><td>${x.date}</td><td>${x.method}</td><td>${x.acc}%</td><td>${x.score}</td></tr>`).join("")||`<tr><td colspan="4" style="color:var(--muted)">該当記録なし</td></tr>`;
+    const byM={};h.forEach(x=>{(byM[x.method]||(byM[x.method]=[])).push(x.score);});
+    $("#memStats").innerHTML=Object.keys(byM).length?Object.entries(byM).map(([k,v])=>`<span class="pill">${k}：平均${Math.round(v.reduce((a,b)=>a+b,0)/v.length)}</span>`).join(""):`<span class="pill">該当記録なし</span>`;
+  }
+  $("#logPeriod")&&$("#logPeriod").addEventListener("change",applyFilter);
+  methodSel.addEventListener("change",applyFilter);
+  applyFilter();
+}
+
+/* ============================================================
+   [NEW] ブラウザ通知リマインダー
+============================================================ */
+const NOTIF_KEY="notif_settings";
+function getNotifSettings(){return JSON.parse(localStorage.getItem(NOTIF_KEY)||'{"enabled":false,"time":"20:00","days":[1,2,3,4,5]}');}
+function setNotifSettings(s){localStorage.setItem(NOTIF_KEY,JSON.stringify(s));}
+function renderNotifSettings(){
+  const s=getNotifSettings();
+  const en=$("#notifEnabled");if(en)en.checked=s.enabled;
+  const tEl=$("#notifTime");if(tEl)tEl.value=s.time;
+  for(let i=0;i<7;i++){const cb=$(`#notifDay${i}`);if(cb)cb.checked=s.days.includes(parseInt(cb.value));}
+  const st=$("#notifStatus");if(st)st.textContent=s.enabled?`✅ 毎日 ${s.time} に通知設定済み`:"通知はオフです";
+}
+if($("#notifSave")){
+  $("#notifSave").addEventListener("click",async()=>{
+    const enabled=$("#notifEnabled").checked;
+    if(enabled&&"Notification"in window){
+      const perm=await Notification.requestPermission();
+      if(perm!=="granted"){alert("通知の許可が得られませんでした");return;}
+    }
+    const time=$("#notifTime").value;
+    const days=[];
+    for(let i=0;i<7;i++){const cb=$(`#notifDay${i}`);if(cb&&cb.checked)days.push(parseInt(cb.value));}
+    setNotifSettings({enabled,time,days});renderNotifSettings();
+    alert(enabled?`${time} に通知をセットしました`:"通知をオフにしました");
+  });
+}
+setInterval(()=>{
+  const s=getNotifSettings();if(!s.enabled)return;
+  const now=new Date();if(!s.days.includes(now.getDay()))return;
+  const[hh,mm]=s.time.split(":").map(Number);
+  if(now.getHours()===hh&&now.getMinutes()===mm&&Notification.permission==="granted"){
+    new Notification("記憶法トレーニング",{body:"今日のトレーニングを始めましょう！",icon:"icons/icon-180.png"});
+  }
+},60000);
+
+/* ============================================================
+   [NEW] カスタムセッション（マイコース）
+============================================================ */
+const SESSION_KEY="my_sessions";
+const SESSION_ICONS={num:"🔢",word:"📝",pair:"🃏",dom:"🎴",yorozu:"📖"};
+const SESSION_MAP={num:"me-num",word:"me-word",pair:"me-pair",dom:"me-dom",yorozu:"me-yorozu"};
+function getSessions(){return JSON.parse(localStorage.getItem(SESSION_KEY)||"[]");}
+function setSessions(s){localStorage.setItem(SESSION_KEY,JSON.stringify(s));}
+let sessionQueue=[],sessionQIdx=0;
+function renderSessionList(){
+  const sessions=getSessions();const el=$("#sessionList");if(!el)return;
+  if(!sessions.length){el.innerHTML=`<p class="lead" style="color:var(--muted)">まだコースがありません</p>`;return;}
+  el.innerHTML=sessions.map((s,i)=>`<div class="session-run"><div style="flex:1"><b>${s.name}</b><div style="font-size:.8rem;color:var(--muted);margin-top:.2rem">${s.modules.map(m=>SESSION_ICONS[m]||"?").join(" → ")}</div></div><button class="btn" style="--accent:var(--terra);--accent-d:var(--terra-d)" onclick="startMySession(${i})">▶ 開始</button><button class="btn danger" style="padding:.4rem .7rem" onclick="deleteMySession(${i})">✕</button></div>`).join("");
+}
+function deleteMySession(i){const s=getSessions();s.splice(i,1);setSessions(s);renderSessionList();}
+let _sessionRunIdx=0,_sessionQueue=[];
+function startMySession(i){
+  const s=getSessions()[i];if(!s)return;
+  _sessionQueue=[...s.modules];_sessionRunIdx=0;runNextSession();
+}
+function runNextSession(){
+  if(_sessionRunIdx>=_sessionQueue.length){alert("コース完了！お疲れ様でした 🎉");return;}
+  const mod=_sessionQueue[_sessionRunIdx];_sessionRunIdx++;
+  const rem=_sessionQueue.length-_sessionRunIdx;
+  const label=SESSION_ICONS[mod]||mod;
+  if(confirm(`${label} を開始します${rem>0?" （残り"+rem+"種目）":""}`)){
+    const detId=SESSION_MAP[mod];if(detId)openDetail(detId);
+  }
+}
+if($("#sessionSave")){
+  $("#sessionSave").addEventListener("click",()=>{
+    const name=$("#sessionName").value.trim()||"マイコース";
+    const checked=$$('#sessionModules input:checked');
+    if(!checked.length){alert("種目を1つ以上選んでください");return;}
+    const modules=checked.map(cb=>cb.value);
+    const sessions=getSessions();sessions.push({name,modules});setSessions(sessions);
+    renderSessionList();$("#sessionName").value="";checked.forEach(cb=>cb.checked=false);
+    alert(`「${name}」を保存しました`);
+  });
+}
+
+/* ============================================================
+   [NEW] ランダムチャレンジ
+============================================================ */
+const GACHA_LIST=[
+  {name:"数字記憶スプリント",detail:"12桁を12秒で記憶",setup(){$("#numDigits").value=12;$("#numSec").value=12;},target:"me-num"},
+  {name:"単語記憶チャレンジ",detail:"10語を20秒で記憶",setup(){$("#mwCount").value=10;$("#mwSec").value=20;},target:"me-word"},
+  {name:"超高速数字記憶",detail:"20桁を20秒で記憶",setup(){$("#numDigits").value=20;$("#numSec").value=20;},target:"me-num"},
+  {name:"単語マラソン",detail:"15語を25秒で記憶",setup(){$("#mwCount").value=15;$("#mwSec").value=25;},target:"me-word"},
+  {name:"カードスプリント",detail:"10ペアを8秒で配置記憶",setup(){$("#pairCount").value=10;$("#pairMemo").value=8;},target:"me-pair"},
+  {name:"8桁即席記憶",detail:"8桁を8秒で記憶",setup(){$("#numDigits").value=8;$("#numSec").value=8;},target:"me-num"},
+  {name:"ドミニク想起ドリル",detail:"変換表から3問ランダム出題",setup(){},target:"me-dom"},
+  {name:"語呂合わせ高速確認",detail:"00〜99語呂合わせを素早くドリル",setup(){},target:"me-yorozu"},
+  {name:"カード配置記憶・標準",detail:"8ペアを6秒で配置記憶",setup(){$("#pairCount").value=8;$("#pairMemo").value=6;},target:"me-pair"},
+  {name:"単語集中10秒",detail:"6語を10秒で記憶",setup(){$("#mwCount").value=6;$("#mwSec").value=10;},target:"me-word"},
+];
+let currentGacha=null;
+function renderGachaList(){
+  const el=$("#gcList");if(!el)return;
+  el.innerHTML=GACHA_LIST.map((g,i)=>`<div style="padding:.3rem 0;border-bottom:1px solid var(--line-soft)">${i+1}. <b>${g.name}</b> — ${g.detail}</div>`).join("");
+}
+function doGacha(){
+  currentGacha=GACHA_LIST[rand(0,GACHA_LIST.length-1)];
+  const r=$("#gachaResult");if(!r)return;
+  r.style.display="block";
+  const n=$("#gcName");const d=$("#gcDetail");
+  if(n){n.textContent=currentGacha.name;n.classList.remove("gacha-anim");void n.offsetWidth;n.classList.add("gacha-anim");}
+  if(d)d.textContent=currentGacha.detail;
+}
+if($("#gachaBtn"))$("#gachaBtn").addEventListener("click",doGacha);
+if($("#gachaReroll"))$("#gachaReroll").addEventListener("click",doGacha);
+if($("#gachaStart")){
+  $("#gachaStart").addEventListener("click",()=>{
+    if(!currentGacha)return;
+    currentGacha.setup();openDetail(currentGacha.target);
+  });
+}
+
+renderNotifSettings();
 
 /* ============================================================
    記憶力レベルテスト
